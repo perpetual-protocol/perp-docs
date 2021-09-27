@@ -6,13 +6,13 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 (module.exports = {
   title: 'Perpetual protocol',
   tagline: 'On-chain DEX with highly efficient liquidity provisioning and up to 10x leverage for makers and takers.',
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  url: 'https://perpetual-protocol.github.io',
+  baseUrl: '/lushan-docs/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'Perpetual protocol', // Usually your GitHub org/user name.
-  projectName: 'Perpetual docs', // Usually your repo name.
+  organizationName: 'perpetual-protocol', // Usually your GitHub org/user name.
+  projectName: 'lushan-docs', // Usually your repo name.
 
   presets: [
     [
