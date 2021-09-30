@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### initialize
 ```solidity
@@ -29,12 +30,14 @@
 
 
 
+
 ## Events
 ### Borrowed
 ```solidity
   event Borrowed(
   )
 ```
+
 
 
 

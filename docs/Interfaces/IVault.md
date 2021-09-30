@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### balanceOf
 ```solidity
@@ -25,6 +26,8 @@
   function getFreeCollateralByRatio(
   ) external returns (int256)
 ```
+
+
 
 
 

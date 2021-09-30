@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### addLiquidity
 ```solidity
@@ -119,12 +120,14 @@
 
 
 
+
 ## Events
 ### LiquidityChanged
 ```solidity
   event LiquidityChanged(
   )
 ```
+
 
 
 

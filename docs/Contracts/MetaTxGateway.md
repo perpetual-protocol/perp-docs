@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### initialize
 ```solidity
@@ -63,45 +64,6 @@ only owner can call
 
 
 
-### _getChainID
-```solidity
-  function _getChainID(
-  ) internal returns (uint256 id)
-```
-
-
-
-
-### _toTypedMessageHash
-```solidity
-  function _toTypedMessageHash(
-  ) internal returns (bytes32)
-```
-Accept message hash and returns hash message in EIP712 compatible form
-So that it can be used to recover signer from signature signed using EIP712 formatted data
-https://eips.ethereum.org/EIPS/eip-712
-"\\x19" makes the encoding deterministic
-"\\x01" is the version byte to make it compatible to EIP-191
-
-
-
-### _hashMetaTransaction
-```solidity
-  function _hashMetaTransaction(
-  ) internal returns (bytes32)
-```
-
-
-
-
-### _verify
-```solidity
-  function _verify(
-  ) internal returns (bool)
-```
-
-
-
 
 ## Events
 ### MetaTransactionExecuted
@@ -109,6 +71,7 @@ https://eips.ethereum.org/EIPS/eip-712
   event MetaTransactionExecuted(
   )
 ```
+
 
 
 

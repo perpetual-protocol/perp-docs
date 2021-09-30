@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### mint
 ```solidity
@@ -16,6 +17,8 @@
   function burn(
   ) external
 ```
+
+
 
 
 

@@ -3,6 +3,7 @@ Interface for the optional metadata functions from the ERC20 standard.
 
 _Available since v4.1._
 
+
 ## Functions
 ### name
 ```solidity
@@ -29,5 +30,7 @@ Returns the symbol of the token.
 ```
 
 Returns the decimals places of the token.
+
+
 
 

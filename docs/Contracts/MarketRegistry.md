@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### initialize
 ```solidity
@@ -92,6 +93,7 @@
 
 
 
+
 ## Events
 ### PoolAdded
 ```solidity
@@ -130,6 +132,7 @@
   event MaxOrdersPerMarketChanged(
   )
 ```
+
 
 
 

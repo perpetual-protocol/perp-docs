@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### initialize
 ```solidity
@@ -47,6 +48,7 @@
 
 
 
+
 ## Events
 ### TwapIntervalChanged
 ```solidity
@@ -77,6 +79,7 @@
   event MaxMarketsPerAccountChanged(
   )
 ```
+
 
 
 

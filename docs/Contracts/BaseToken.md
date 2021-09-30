@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### initialize
 ```solidity
@@ -18,13 +19,6 @@
 ```
 
 
-
-
-### _formatDecimals
-```solidity
-  function _formatDecimals(
-  ) internal returns (uint256)
-```
 
 
 

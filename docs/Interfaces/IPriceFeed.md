@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### decimals
 ```solidity
@@ -16,6 +17,8 @@
   function getPrice(
   ) external returns (uint256)
 ```
+
+
 
 
 

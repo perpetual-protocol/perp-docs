@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### initialize
 ```solidity
@@ -168,81 +169,6 @@ this is the view version of updateFundingGrowthAndLiquidityCoefficientInFundingP
 
 
 
-### _removeLiquidity
-```solidity
-  function _removeLiquidity(
-  ) internal returns (struct OrderBook.RemoveLiquidityResponse)
-```
-
-
-
-
-### _removeLiquidityFromOrder
-```solidity
-  function _removeLiquidityFromOrder(
-  ) internal returns (uint256)
-```
-
-
-
-
-### _removeOrder
-```solidity
-  function _removeOrder(
-  ) internal
-```
-
-
-
-
-### _addLiquidityToOrder
-```solidity
-  function _addLiquidityToOrder(
-  ) internal returns (uint256)
-```
-
-
-
-
-### _getTotalTokenAmountInPool
-```solidity
-  function _getTotalTokenAmountInPool(
-  ) internal returns (uint256 tokenAmount)
-```
-
-Get total amount of the specified tokens in the specified pool.
-     Note:
-       1. when querying quote amount, it includes Exchange fees, i.e.:
-          quote amount = quote liquidity + fees
-          base amount = base liquidity
-       2. quote/base liquidity does NOT include Uniswap pool fees since
-          they do not have any impact to our margin system
-
-
-### _getLiquidityCoefficientInFundingPaymentByOrder
-```solidity
-  function _getLiquidityCoefficientInFundingPaymentByOrder(
-  ) internal returns (int256)
-```
-
-the funding payment of an order/liquidity is composed of
-     1. funding accrued inside the range 2. funding accrued below the range
-     there is no funding when the price goes above the range, as liquidity is all swapped into quoteToken
-
-
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`liquidityCoefficientInFundingPayment`| struct OrderBook.OpenOrder | the funding payment of an order/liquidity
-### _calcOwedFee
-```solidity
-  function _calcOwedFee(
-  ) internal returns (uint256)
-```
-
-CANNOT use safeMath for feeGrowthInside calculation, as it can be extremely large and overflow
-the difference between two feeGrowthInside, however, is correct and won't be affected by overflow or not
-
 
 ## Events
 ### LiquidityChanged
@@ -250,6 +176,7 @@ the difference between two feeGrowthInside, however, is correct and won't be aff
   event LiquidityChanged(
   )
 ```
+
 
 
 

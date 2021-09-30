@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### initialize
 ```solidity
@@ -162,176 +163,6 @@ accountValue = totalCollateralValue + totalUnrealizedPnl, in the settlement toke
 the amount of quote token paid for a position when opening
 
 
-### _cancelExcessOrders
-```solidity
-  function _cancelExcessOrders(
-  ) internal
-```
-
-
-
-
-### _afterRemoveLiquidity
-```solidity
-  function _afterRemoveLiquidity(
-  ) internal
-```
-
-
-
-
-### _swapAndCalculateOpenNotional
-```solidity
-  function _swapAndCalculateOpenNotional(
-  ) internal returns (struct ClearingHouse.SwapResponse)
-```
-
-
-
-
-### _realizePnl
-```solidity
-  function _realizePnl(
-  ) internal
-```
-
-caller of this function must ensure there's enough available and debt of quote
-
-
-### _swap
-```solidity
-  function _swap(
-  ) internal returns (struct ClearingHouse.SwapResponse)
-```
-
-
-
-
-### _removeLiquidity
-```solidity
-  function _removeLiquidity(
-  ) internal returns (struct ClearingHouse.RemoveLiquidityResponse)
-```
-
-
-
-
-### _openPosition
-```solidity
-  function _openPosition(
-  ) internal returns (struct ClearingHouse.SwapResponse)
-```
-
-explainer diagram for the relationship between exchangedPositionNotional, fee and openNotional:
-     https://www.figma.com/file/xuue5qGH4RalX7uAbbzgP3/swap-accounting-and-events
-
-
-### _closePosition
-```solidity
-  function _closePosition(
-  ) internal returns (struct ClearingHouse.SwapResponse)
-```
-
-
-
-
-### _isOverPriceLimit
-```solidity
-  function _isOverPriceLimit(
-  ) internal returns (bool)
-```
-
-
-
-
-### _getSqrtPriceLimit
-```solidity
-  function _getSqrtPriceLimit(
-  ) internal returns (uint160)
-```
-
-
-
-
-### _getTotalCollateralValue
-```solidity
-  function _getTotalCollateralValue(
-  ) internal returns (int256)
-```
-
-the return value is in settlement token decimals
-
-
-### _isIncreasePosition
-```solidity
-  function _isIncreasePosition(
-  ) internal returns (bool)
-```
-
-
-
-
-### _msgSender
-```solidity
-  function _msgSender(
-  ) internal returns (address payable)
-```
-return the sender of this call.
-if the call came through our trusted forwarder, return the original sender.
-otherwise, return `msg.sender`.
-should be used in the contract anywhere instead of msg.sender
-
-
-
-### _msgData
-```solidity
-  function _msgData(
-  ) internal returns (bytes)
-```
-return the msg.data of this call.
-if the call came through our trusted forwarder, then the real sender was appended as the last 20 bytes
-of the msg.data - so this method will strip those 20 bytes off.
-otherwise, return `msg.data`
-should be used in the contract instead of msg.data, where the difference matters (e.g. when explicitly
-signing or hashing the
-
-
-
-### _requireHasBaseToken
-```solidity
-  function _requireHasBaseToken(
-  ) internal
-```
-
-
-
-
-### _getFreeCollateralByRatio
-```solidity
-  function _getFreeCollateralByRatio(
-  ) internal returns (int256)
-```
-
-
-
-
-### _requireEnoughFreeCollateral
-```solidity
-  function _requireEnoughFreeCollateral(
-  ) internal
-```
-
-
-
-
-### _checkSlippage
-```solidity
-  function _checkSlippage(
-  ) internal
-```
-
-
-
 
 ## Events
 ### PositionChanged
@@ -355,6 +186,7 @@ signing or hashing the
   event ReferredPositionChanged(
   )
 ```
+
 
 
 

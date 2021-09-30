@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### addLiquidity
 ```solidity
@@ -164,6 +165,7 @@
 
 
 
+
 ## Events
 ### ReferredPositionChanged
 ```solidity
@@ -186,6 +188,7 @@
   event FundingUpdated(
   )
 ```
+
 
 
 

@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### initialize
 ```solidity
@@ -165,63 +166,6 @@ this function calculates the up-to-date globalFundingGrowth and twaps and pass t
 
 
 
-### _updateFundingGrowth
-```solidity
-  function _updateFundingGrowth(
-  ) internal returns (int256 pendingFundingPayment)
-```
-
-this is the non-view version of getPendingFundingPayment()
-
-
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`pendingFundingPayment`| address | the pending funding payment of a trader in one market,
-        including liquidity & balance coefficients
-### _getIndexPrice
-```solidity
-  function _getIndexPrice(
-  ) internal returns (uint256)
-```
-
-
-
-
-### _getScaledAmountForSwaps
-```solidity
-  function _getScaledAmountForSwaps(
-  ) internal returns (uint256 scaledAmountForUniswapV3PoolSwap, int256 signedScaledAmountForReplaySwap)
-```
-
-for UniswapV3Pool.swap(), scaling the amount is necessary to achieve the custom fee effect
-for _replaySwap(), however, as we can input ExchangeFeeRatioRatio directly in SwapMath.computeSwapStep(),
-     there is no need to stick to the scaled amount
-refer to CH._openPosition() docstring for explainer diagram
-
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`scaledAmountForUniswapV3PoolSwap`| bool | the unsigned scaled amount for UniswapV3Pool.swap()
-|`signedScaledAmountForReplaySwap`| bool | the signed scaled amount for _replaySwap()
-
-### _getPendingFundingPaymentWithLiquidityCoefficient
-```solidity
-  function _getPendingFundingPaymentWithLiquidityCoefficient(
-  ) internal returns (int256)
-```
-
-
-
-
-### _getTwapInterval
-```solidity
-  function _getTwapInterval(
-  ) internal returns (uint32)
-```
-
-
-
 
 ## Events
 ### FundingPaymentSettled
@@ -241,6 +185,7 @@ refer to CH._openPosition() docstring for explainer diagram
   event FundingUpdated(
   )
 ```
+
 
 
 

@@ -1,6 +1,7 @@
 
 
 
+
 ## Functions
 ### initialize
 ```solidity
@@ -198,55 +199,5 @@ we use 15 mins twap to calc position value
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`the`| address | pending funding payment of a trader in one market
-### _settleFundingAndUpdateFundingGrowth
-```solidity
-  function _settleFundingAndUpdateFundingGrowth(
-  ) internal returns (struct Funding.Growth)
-```
-
-this function should be called at the beginning of every high-level function, such as openPosition()
 
 
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`fundingGrowthGlobal`| address | the up-to-date globalFundingGrowth, usually used for later calculations
-### _getPendingFundingPayment
-```solidity
-  function _getPendingFundingPayment(
-  ) internal returns (int256)
-```
-
-
-
-
-### _getIndexPrice
-```solidity
-  function _getIndexPrice(
-  ) internal returns (uint256)
-```
-
-
-
-
-### _getTwapInterval
-```solidity
-  function _getTwapInterval(
-  ) internal returns (uint32)
-```
-
-
-
-
-### _getAllPendingFundingPayment
-```solidity
-  function _getAllPendingFundingPayment(
-  ) internal returns (int256 pendingFundingPayment)
-```
-
-
-
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`pendingFundingPayment`| address | the pending funding payment of a trader in all markets
