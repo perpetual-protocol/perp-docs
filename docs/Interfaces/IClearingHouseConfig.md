@@ -3,69 +3,6 @@
 
 
 ## Functions
-### initialize
-```solidity
-  function initialize(
-  ) external
-```
-
-
-
-
-### setLiquidationPenaltyRatio
-```solidity
-  function setLiquidationPenaltyRatio(
-  ) external
-```
-
-
-
-
-### setPartialCloseRatio
-```solidity
-  function setPartialCloseRatio(
-  ) external
-```
-
-
-
-
-### setTwapInterval
-```solidity
-  function setTwapInterval(
-  ) external
-```
-
-
-
-
-### setMaxMarketsPerAccount
-```solidity
-  function setMaxMarketsPerAccount(
-  ) external
-```
-
-
-
-
-### setSettlementTokenBalanceCap
-```solidity
-  function setSettlementTokenBalanceCap(
-  ) external
-```
-
-
-
-
-### setMaxFundingRate
-```solidity
-  function setMaxFundingRate(
-  ) external
-```
-
-
-
-
 ### getMaxMarketsPerAccount
 ```solidity
   function getMaxMarketsPerAccount(
@@ -139,55 +76,6 @@
 ```
 
 
-
-
-
-## Events
-### TwapIntervalChanged
-```solidity
-  event TwapIntervalChanged(
-  )
-```
-
-
-
-### LiquidationPenaltyRatioChanged
-```solidity
-  event LiquidationPenaltyRatioChanged(
-  )
-```
-
-
-
-### PartialCloseRatioChanged
-```solidity
-  event PartialCloseRatioChanged(
-  )
-```
-
-
-
-### MaxMarketsPerAccountChanged
-```solidity
-  event MaxMarketsPerAccountChanged(
-  )
-```
-
-
-
-### SettlementTokenBalanceCapChanged
-```solidity
-  event SettlementTokenBalanceCapChanged(
-  )
-```
-
-
-
-### MaxFundingRateChanged
-```solidity
-  event MaxFundingRateChanged(
-  )
-```
 
 
 

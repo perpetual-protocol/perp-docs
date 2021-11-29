@@ -3,24 +3,6 @@
 
 
 ## Functions
-### initialize
-```solidity
-  function initialize(
-  ) external
-```
-
-
-
-
-### setVault
-```solidity
-  function setVault(
-  ) external
-```
-
-
-
-
 ### modifyTakerBalance
 ```solidity
   function modifyTakerBalance(
@@ -39,6 +21,15 @@
 
 
 
+### settleOwedRealizedPnl
+```solidity
+  function settleOwedRealizedPnl(
+  ) external returns (int256 pnl)
+```
+
+this function is now only called by Vault.withdraw()
+
+
 ### settleQuoteToOwedRealizedPnl
 ```solidity
   function settleQuoteToOwedRealizedPnl(
@@ -48,41 +39,58 @@
 
 
 
-### settleOwedRealizedPnl
-```solidity
-  function settleOwedRealizedPnl(
-  ) external returns (int256)
-```
-
-
-
-
 ### settleBalanceAndDeregister
 ```solidity
   function settleBalanceAndDeregister(
+    address maker,
+    address baseToken,
+    int256 realizedPnl,
+    int256 fee
   ) external
 ```
 
+Settle account balance and deregister base token
 
-
+#### Parameters:
+| Name | Type | Description                                                          |
+| :--- | :--- | :------------------------------------------------------------------- |
+|`maker` | address | The address of the maker
+|`baseToken` | address | The address of the market's base token
+|`realizedPnl` | int256 | Amount of pnl realized
+|`fee` | int256 | Amount of fee collected from pool
 
 ### registerBaseToken
 ```solidity
   function registerBaseToken(
+    address trader,
+    address baseToken
   ) external
 ```
 
+every time a trader's position value is checked, the base token list of this trader will be traversed;
+     thus, this list should be kept as short as possible
 
-
+#### Parameters:
+| Name | Type | Description                                                          |
+| :--- | :--- | :------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+|`baseToken` | address | The address of the trader's base token
 
 ### deregisterBaseToken
 ```solidity
   function deregisterBaseToken(
+    address trader,
+    address baseToken
   ) external
 ```
 
+this function is expensive
 
-
+#### Parameters:
+| Name | Type | Description                                                          |
+| :--- | :--- | :------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+|`baseToken` | address | The address of the trader's base token
 
 ### updateTwPremiumGrowthGlobal
 ```solidity
@@ -155,7 +163,10 @@
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`totalOpenNotional`| address | the amount of quote token paid for a position when opening
 ### getTotalDebtValue
 ```solidity
   function getTotalDebtValue(
@@ -181,7 +192,7 @@ this is different from Vault._getTotalMarginRequirement(), which is for freeColl
 ### getPnlAndPendingFee
 ```solidity
   function getPnlAndPendingFee(
-  ) external returns (int256, int256, uint256)
+  ) external returns (int256 owedRealizedPnl, int256 unrealizedPnl, uint256 pendingFee)
 ```
 
 
@@ -204,7 +215,7 @@ this is different from Vault._getTotalMarginRequirement(), which is for freeColl
 ### getBase
 ```solidity
   function getBase(
-  ) public returns (int256)
+  ) external returns (int256)
 ```
 
 
@@ -213,7 +224,7 @@ this is different from Vault._getTotalMarginRequirement(), which is for freeColl
 ### getQuote
 ```solidity
   function getQuote(
-  ) public returns (int256)
+  ) external returns (int256)
 ```
 
 
@@ -222,7 +233,7 @@ this is different from Vault._getTotalMarginRequirement(), which is for freeColl
 ### getTakerPositionSize
 ```solidity
   function getTakerPositionSize(
-  ) public returns (int256)
+  ) external returns (int256)
 ```
 
 
@@ -231,7 +242,7 @@ this is different from Vault._getTotalMarginRequirement(), which is for freeColl
 ### getTotalPositionSize
 ```solidity
   function getTotalPositionSize(
-  ) public returns (int256)
+  ) external returns (int256)
 ```
 
 
@@ -240,7 +251,7 @@ this is different from Vault._getTotalMarginRequirement(), which is for freeColl
 ### getTotalPositionValue
 ```solidity
   function getTotalPositionValue(
-  ) public returns (int256)
+  ) external returns (int256)
 ```
 
 a negative returned value is only be used when calculating pnl
@@ -250,7 +261,7 @@ we use 15 mins twap to calc position value
 ### getTotalAbsPositionValue
 ```solidity
   function getTotalAbsPositionValue(
-  ) public returns (uint256)
+  ) external returns (uint256)
 ```
 
 
@@ -260,3 +271,31 @@ we use 15 mins twap to calc position value
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`sum`| address | up positions value of every market, it calls `getTotalPositionValue` internally
 
+## Events
+### VaultChanged
+```solidity
+  event VaultChanged(
+    address vault
+  )
+```
+
+
+#### Parameters:
+| Name                           | Type          | Description                                    |
+| :----------------------------- | :------------ | :--------------------------------------------- |
+|`vault`| address | The address of the vault contract
+### PnlRealized
+```solidity
+  event PnlRealized(
+    address trader,
+    int256 amount
+  )
+```
+
+Emit whenever a trader's `owedRealizedPnl` is updated
+
+#### Parameters:
+| Name                           | Type          | Description                                    |
+| :----------------------------- | :------------ | :--------------------------------------------- |
+|`trader`| address | The address of the trader
+|`amount`| int256 | The amount changed

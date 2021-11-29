@@ -3,15 +3,6 @@
 
 
 ## Functions
-### token
-```solidity
-  function token(
-  ) external returns (address)
-```
-
-
-
-
 ### borrow
 ```solidity
   function borrow(
@@ -21,5 +12,35 @@
 
 
 
+### getToken
+```solidity
+  function getToken(
+  ) external returns (address)
+```
 
 
+
+
+### getBorrower
+```solidity
+  function getBorrower(
+  ) external returns (address)
+```
+
+
+
+
+
+## Events
+### BorrowerChanged
+```solidity
+  event BorrowerChanged(
+    address borrower
+  )
+```
+
+
+#### Parameters:
+| Name                           | Type          | Description                                    |
+| :----------------------------- | :------------ | :--------------------------------------------- |
+|`borrower`| address | The address of the borrower

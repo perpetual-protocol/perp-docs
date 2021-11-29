@@ -30,6 +30,24 @@
 
 
 
+### getToken
+```solidity
+  function getToken(
+  ) external returns (address)
+```
+
+
+
+
+### getBorrower
+```solidity
+  function getBorrower(
+  ) external returns (address)
+```
+
+
+
+
 
 ## Events
 ### Borrowed
@@ -37,7 +55,6 @@
   event Borrowed(
   )
 ```
-
 
 
 

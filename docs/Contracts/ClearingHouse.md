@@ -1,6 +1,46 @@
 
 
 
+## Structs
+### InternalOpenPositionParams
+```solidity
+  struct InternalOpenPositionParams(
+    address trader
+    address baseToken
+    bool isBaseToQuote
+    bool isExactInput
+    bool isClose
+    uint256 amount
+    uint160 sqrtPriceLimitX96
+  )
+```
+
+
+
+### InternalClosePositionParams
+```solidity
+  struct InternalClosePositionParams(
+    address trader
+    address baseToken
+    uint160 sqrtPriceLimitX96
+  )
+```
+
+
+
+### InternalCheckSlippageParams
+```solidity
+  struct InternalCheckSlippageParams(
+    bool isBaseToQuote
+    bool isExactInput
+    uint256 base
+    uint256 quote
+    uint256 oppositeAmountBound
+  )
+```
+
+
+
 
 ## Functions
 ### initialize
@@ -10,15 +50,6 @@
 ```
 
 this function is public for testing
-
-
-### setMaxTickCrossedWithinBlock
-```solidity
-  function setMaxTickCrossedWithinBlock(
-  ) external
-```
-
-
 
 
 ### setTrustedForwarder
@@ -33,16 +64,25 @@ this function is public for testing
 ### addLiquidity
 ```solidity
   function addLiquidity(
-  ) external returns (struct ClearingHouse.AddLiquidityResponse)
+  ) external returns (struct IClearingHouse.AddLiquidityResponse)
 ```
 
-
+tx will fail if adding base == 0 && quote == 0 / liquidity == 0
 
 
 ### removeLiquidity
 ```solidity
   function removeLiquidity(
-  ) external returns (struct ClearingHouse.RemoveLiquidityResponse response)
+  ) external returns (struct IClearingHouse.RemoveLiquidityResponse)
+```
+
+
+
+
+### settleAllFunding
+```solidity
+  function settleAllFunding(
+  ) external
 ```
 
 
@@ -51,7 +91,7 @@ this function is public for testing
 ### openPosition
 ```solidity
   function openPosition(
-  ) external returns (uint256 deltaBase, uint256 deltaQuote)
+  ) external returns (uint256 base, uint256 quote)
 ```
 
 
@@ -60,7 +100,7 @@ this function is public for testing
 ### closePosition
 ```solidity
   function closePosition(
-  ) external returns (uint256 deltaBase, uint256 deltaQuote)
+  ) external returns (uint256 base, uint256 quote)
 ```
 
 
@@ -103,9 +143,7 @@ this function is public for testing
 ```
 Called to `msg.sender` after minting liquidity to a position from IUniswapV3Pool#mint.
 
-In the implementation you must pay the pool tokens owed for the minted liquidity.
-The caller of this method must be checked to be a UniswapV3Pool deployed by the canonical UniswapV3Factory.
-
+namings here follow Uniswap's convention
 #### Parameters:
 | Name | Type | Description                                                          |
 | :--- | :--- | :------------------------------------------------------------------- |
@@ -123,10 +161,7 @@ The caller of this method must be checked to be a UniswapV3Pool deployed by the 
 ```
 Called to `msg.sender` after executing a swap via IUniswapV3Pool#swap.
 
-In the implementation you must pay the pool tokens owed for the swap.
-The caller of this method must be checked to be a UniswapV3Pool deployed by the canonical UniswapV3Factory.
-amount0Delta and amount1Delta can both be 0 if no tokens were swapped.
-
+namings here follow Uniswap's convention
 #### Parameters:
 | Name | Type | Description                                                          |
 | :--- | :--- | :------------------------------------------------------------------- |
@@ -136,10 +171,73 @@ the end of the swap. If positive, the callback must send that amount of token0 t
 the end of the swap. If positive, the callback must send that amount of token1 to the pool.
 |`data` | bytes | Any data passed through by the caller via the IUniswapV3PoolActions#swap call
 
-### getMaxTickCrossedWithinBlock
+### getQuoteToken
 ```solidity
-  function getMaxTickCrossedWithinBlock(
-  ) external returns (uint24)
+  function getQuoteToken(
+  ) external returns (address)
+```
+
+
+
+
+### getUniswapV3Factory
+```solidity
+  function getUniswapV3Factory(
+  ) external returns (address)
+```
+
+
+
+
+### getClearingHouseConfig
+```solidity
+  function getClearingHouseConfig(
+  ) external returns (address)
+```
+
+
+
+
+### getVault
+```solidity
+  function getVault(
+  ) external returns (address)
+```
+
+
+
+
+### getExchange
+```solidity
+  function getExchange(
+  ) external returns (address)
+```
+
+
+
+
+### getOrderBook
+```solidity
+  function getOrderBook(
+  ) external returns (address)
+```
+
+
+
+
+### getAccountBalance
+```solidity
+  function getAccountBalance(
+  ) external returns (address)
+```
+
+
+
+
+### getInsuranceFund
+```solidity
+  function getInsuranceFund(
+  ) external returns (address)
 ```
 
 
@@ -151,42 +249,7 @@ the end of the swap. If positive, the callback must send that amount of token1 t
   ) public returns (int256)
 ```
 
-accountValue = totalCollateralValue + totalUnrealizedPnl, in the settlement token's decimals
-
-
-### getOpenNotional
-```solidity
-  function getOpenNotional(
-  ) public returns (int256)
-```
-
-the amount of quote token paid for a position when opening
-
-
-
-## Events
-### PositionChanged
-```solidity
-  event PositionChanged(
-  )
-```
-
-
-
-### PositionLiquidated
-```solidity
-  event PositionLiquidated(
-  )
-```
-
-
-
-### ReferredPositionChanged
-```solidity
-  event ReferredPositionChanged(
-  )
-```
-
+accountValue = totalCollateralValue + totalUnrealizedPnl, in 18 decimals
 
 
 

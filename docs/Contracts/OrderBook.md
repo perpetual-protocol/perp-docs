@@ -1,6 +1,55 @@
 
 
 
+## Structs
+### InternalAddLiquidityToOrderParams
+```solidity
+  struct InternalAddLiquidityToOrderParams(
+    address maker
+    address baseToken
+    address pool
+    int24 lowerTick
+    int24 upperTick
+    uint256 feeGrowthGlobalX128
+    uint128 liquidity
+    uint256 base
+    uint256 quote
+    struct Funding.Growth globalFundingGrowth
+  )
+```
+
+
+
+### InternalRemoveLiquidityParams
+```solidity
+  struct InternalRemoveLiquidityParams(
+    address maker
+    address baseToken
+    address pool
+    bytes32 orderId
+    int24 lowerTick
+    int24 upperTick
+    uint128 liquidity
+  )
+```
+
+
+
+### InternalSwapStep
+```solidity
+  struct InternalSwapStep(
+    uint160 initialSqrtPriceX96
+    int24 nextTick
+    bool isNextTickInitialized
+    uint160 nextSqrtPriceX96
+    uint256 amountIn
+    uint256 amountOut
+    uint256 fee
+  )
+```
+
+
+
 
 ## Functions
 ### initialize
@@ -24,7 +73,7 @@
 ### addLiquidity
 ```solidity
   function addLiquidity(
-  ) external returns (struct OrderBook.AddLiquidityResponse)
+  ) external returns (struct IOrderBook.AddLiquidityResponse)
 ```
 
 
@@ -33,16 +82,7 @@
 ### removeLiquidity
 ```solidity
   function removeLiquidity(
-  ) external returns (struct OrderBook.RemoveLiquidityResponse)
-```
-
-
-
-
-### removeLiquidityByIds
-```solidity
-  function removeLiquidityByIds(
-  ) external returns (struct OrderBook.RemoveLiquidityResponse)
+  ) external returns (struct IOrderBook.RemoveLiquidityResponse)
 ```
 
 
@@ -61,6 +101,15 @@ this is the non-view version of getLiquidityCoefficientInFundingPayment()
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`liquidityCoefficientInFundingPayment`| address | the funding payment of all orders/liquidity of a maker
+### updateOrderDebt
+```solidity
+  function updateOrderDebt(
+  ) external
+```
+
+
+
+
 ### uniswapV3MintCallback
 ```solidity
   function uniswapV3MintCallback(
@@ -84,7 +133,16 @@ The caller of this method must be checked to be a UniswapV3Pool deployed by the 
 ### replaySwap
 ```solidity
   function replaySwap(
-  ) external returns (struct OrderBook.ReplaySwapResponse)
+  ) external returns (struct IOrderBook.ReplaySwapResponse)
+```
+
+
+
+
+### getExchange
+```solidity
+  function getExchange(
+  ) external returns (address)
 ```
 
 
@@ -102,7 +160,7 @@ The caller of this method must be checked to be a UniswapV3Pool deployed by the 
 ### getOpenOrderById
 ```solidity
   function getOpenOrderById(
-  ) external returns (struct OrderBook.OpenOrder)
+  ) external returns (struct OpenOrder.Info)
 ```
 
 
@@ -111,7 +169,7 @@ The caller of this method must be checked to be a UniswapV3Pool deployed by the 
 ### getOpenOrder
 ```solidity
   function getOpenOrder(
-  ) external returns (struct OrderBook.OpenOrder)
+  ) external returns (struct OpenOrder.Info)
 ```
 
 
@@ -126,24 +184,24 @@ The caller of this method must be checked to be a UniswapV3Pool deployed by the 
 
 
 
-### getTotalQuoteAmountInPools
+### getTotalQuoteBalanceAndPendingFee
 ```solidity
-  function getTotalQuoteAmountInPools(
-  ) external returns (uint256)
+  function getTotalQuoteBalanceAndPendingFee(
+  ) external returns (int256 totalQuoteAmountInPools, uint256 totalPendingFee)
 ```
 
-note the return value includes maker fee.
-     For more details please refer to _getTotalTokenAmountInPool() docstring
 
 
-### getTotalTokenAmountInPool
+
+### getTotalTokenAmountInPoolAndPendingFee
 ```solidity
-  function getTotalTokenAmountInPool(
-  ) external returns (uint256 tokenAmount)
+  function getTotalTokenAmountInPoolAndPendingFee(
+  ) external returns (uint256 tokenAmount, uint256 pendingFee)
 ```
 
 the returned quote amount does not include funding payment because
      the latter is counted directly toward realizedPnl.
+     the return value includes maker fee.
      please refer to _getTotalTokenAmountInPool() docstring for specs
 
 
@@ -160,22 +218,21 @@ this is the view version of updateFundingGrowthAndLiquidityCoefficientInFundingP
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`liquidityCoefficientInFundingPayment`| address | the funding payment of all orders/liquidity of a maker
-### getFeeGrowthGlobal
+### getPendingFee
 ```solidity
-  function getFeeGrowthGlobal(
+  function getPendingFee(
   ) external returns (uint256)
 ```
 
 
 
 
-
-## Events
-### LiquidityChanged
+### getTotalOrderDebt
 ```solidity
-  event LiquidityChanged(
-  )
+  function getTotalOrderDebt(
+  ) public returns (uint256)
 ```
+
 
 
 

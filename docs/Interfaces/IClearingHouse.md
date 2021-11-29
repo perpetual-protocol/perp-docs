@@ -1,6 +1,103 @@
 
 
 
+## Structs
+### AddLiquidityParams
+```solidity
+  struct AddLiquidityParams(
+    address baseToken
+    uint256 base
+    uint256 quote
+    int24 lowerTick
+    int24 upperTick
+    uint256 minBase
+    uint256 minQuote
+    bool useTakerBalance
+    uint256 deadline
+  )
+```
+
+
+
+### RemoveLiquidityParams
+```solidity
+  struct RemoveLiquidityParams(
+    address baseToken
+    int24 lowerTick
+    int24 upperTick
+    uint128 liquidity
+    uint256 minBase
+    uint256 minQuote
+    uint256 deadline
+  )
+```
+
+
+
+### AddLiquidityResponse
+```solidity
+  struct AddLiquidityResponse(
+    uint256 base
+    uint256 quote
+    uint256 fee
+    uint256 liquidity
+  )
+```
+
+
+
+### RemoveLiquidityResponse
+```solidity
+  struct RemoveLiquidityResponse(
+    uint256 base
+    uint256 quote
+    uint256 fee
+  )
+```
+
+
+
+### OpenPositionParams
+```solidity
+  struct OpenPositionParams(
+    address baseToken
+    bool isBaseToQuote
+    bool isExactInput
+    uint256 amount
+    uint256 oppositeAmountBound
+    uint256 deadline
+    uint160 sqrtPriceLimitX96
+    bytes32 referralCode
+  )
+```
+
+
+
+### ClosePositionParams
+```solidity
+  struct ClosePositionParams(
+    address baseToken
+    uint160 sqrtPriceLimitX96
+    uint256 oppositeAmountBound
+    uint256 deadline
+    bytes32 referralCode
+  )
+```
+
+
+
+### CollectPendingFeeParams
+```solidity
+  struct CollectPendingFeeParams(
+    address trader
+    address baseToken
+    int24 lowerTick
+    int24 upperTick
+  )
+```
+
+
+
 
 ## Functions
 ### addLiquidity
@@ -9,7 +106,7 @@
   ) external returns (struct IClearingHouse.AddLiquidityResponse)
 ```
 
-
+tx will fail if adding base == 0 && quote == 0 / liquidity == 0
 
 
 ### removeLiquidity
@@ -21,10 +118,19 @@
 
 
 
+### settleAllFunding
+```solidity
+  function settleAllFunding(
+  ) external
+```
+
+
+
+
 ### openPosition
 ```solidity
   function openPosition(
-  ) external returns (uint256 deltaBase, uint256 deltaQuote)
+  ) external returns (uint256 base, uint256 quote)
 ```
 
 
@@ -33,7 +139,7 @@
 ### closePosition
 ```solidity
   function closePosition(
-  ) external returns (uint256 deltaBase, uint256 deltaQuote)
+  ) external returns (uint256 base, uint256 quote)
 ```
 
 
@@ -66,100 +172,82 @@
 
 
 
-### getMaxTickCrossedWithinBlock
-```solidity
-  function getMaxTickCrossedWithinBlock(
-  ) external returns (uint24)
-```
-
-
-
-
 ### getAccountValue
 ```solidity
   function getAccountValue(
   ) external returns (int256)
 ```
 
+accountValue = totalCollateralValue + totalUnrealizedPnl, in 18 decimals
 
 
-
-### getPositionSize
+### getQuoteToken
 ```solidity
-  function getPositionSize(
-  ) external returns (int256)
+  function getQuoteToken(
+  ) external returns (address)
 ```
 
 
 
 
-### getPositionValue
+### getUniswapV3Factory
 ```solidity
-  function getPositionValue(
-  ) external returns (int256)
+  function getUniswapV3Factory(
+  ) external returns (address)
 ```
 
 
 
 
-### getOpenNotional
+### getClearingHouseConfig
 ```solidity
-  function getOpenNotional(
-  ) external returns (int256)
+  function getClearingHouseConfig(
+  ) external returns (address)
 ```
 
 
 
 
-### getOwedRealizedPnl
+### getVault
 ```solidity
-  function getOwedRealizedPnl(
-  ) external returns (int256)
+  function getVault(
+  ) external returns (address)
 ```
 
 
 
 
-### getTotalInitialMarginRequirement
+### getExchange
 ```solidity
-  function getTotalInitialMarginRequirement(
-  ) external returns (uint256)
+  function getExchange(
+  ) external returns (address)
 ```
 
 
 
 
-### getNetQuoteBalance
+### getOrderBook
 ```solidity
-  function getNetQuoteBalance(
-  ) external returns (int256)
+  function getOrderBook(
+  ) external returns (address)
 ```
 
 
 
 
-### getAllPendingFundingPayment
+### getAccountBalance
 ```solidity
-  function getAllPendingFundingPayment(
-  ) external returns (int256)
+  function getAccountBalance(
+  ) external returns (address)
 ```
 
 
 
 
-### getPendingFundingPayment
+### getInsuranceFund
 ```solidity
-  function getPendingFundingPayment(
-  ) external returns (int256)
-```
-
-
-
-
-### getTotalUnrealizedPnl
-```solidity
-  function getTotalUnrealizedPnl(
-  ) external returns (int256)
+  function getInsuranceFund(
+  ) external returns (address)
 ```
 
 
@@ -183,12 +271,49 @@
 
 
 
-### FundingUpdated
+### LiquidityChanged
 ```solidity
-  event FundingUpdated(
+  event LiquidityChanged(
+    address base,
+    address quote,
+    address liquidity,
+    int24 quoteFee
   )
 ```
 
+
+#### Parameters:
+| Name                           | Type          | Description                                    |
+| :----------------------------- | :------------ | :--------------------------------------------- |
+|`base`| address | the amount of base token added (> 0) / removed (< 0) as liquidity; fees not included
+|`quote`| address | the amount of quote token added ... (same as the above)
+|`liquidity`| address | the amount of liquidity unit added (> 0) / removed (< 0)
+|`quoteFee`| int24 | the amount of quote token the maker received as fees
+### PositionChanged
+```solidity
+  event PositionChanged(
+  )
+```
+
+
+
+### FundingPaymentSettled
+```solidity
+  event FundingPaymentSettled(
+    address fundingPayment
+  )
+```
+
+
+#### Parameters:
+| Name                           | Type          | Description                                    |
+| :----------------------------- | :------------ | :--------------------------------------------- |
+|`fundingPayment`| address | > 0: payment, < 0 : receipt
+### TrustedForwarderChanged
+```solidity
+  event TrustedForwarderChanged(
+  )
+```
 
 
 

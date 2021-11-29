@@ -21,15 +21,6 @@
 
 
 
-### setClearingHouse
-```solidity
-  function setClearingHouse(
-  ) external
-```
-
-
-
-
 ### setFeeRatio
 ```solidity
   function setFeeRatio(
@@ -52,6 +43,33 @@
 ```solidity
   function setMaxOrdersPerMarket(
   ) external
+```
+
+
+
+
+### getQuoteToken
+```solidity
+  function getQuoteToken(
+  ) external returns (address)
+```
+
+
+
+
+### getUniswapV3Factory
+```solidity
+  function getUniswapV3Factory(
+  ) external returns (address)
+```
+
+
+
+
+### getMaxOrdersPerMarket
+```solidity
+  function getMaxOrdersPerMarket(
+  ) external returns (uint8)
 ```
 
 
@@ -87,51 +105,18 @@
 ### getMarketInfo
 ```solidity
   function getMarketInfo(
-  ) external returns (struct MarketRegistry.MarketInfo)
+  ) external returns (struct IMarketRegistry.MarketInfo)
 ```
 
 
 
 
-
-## Events
-### PoolAdded
+### hasPool
 ```solidity
-  event PoolAdded(
-  )
+  function hasPool(
+  ) external returns (bool)
 ```
 
-
-
-### ClearingHouseChanged
-```solidity
-  event ClearingHouseChanged(
-  )
-```
-
-
-
-### FeeRatioChanged
-```solidity
-  event FeeRatioChanged(
-  )
-```
-
-
-
-### InsuranceFundFeeRatioChanged
-```solidity
-  event InsuranceFundFeeRatioChanged(
-  )
-```
-
-
-
-### MaxOrdersPerMarketChanged
-```solidity
-  event MaxOrdersPerMarketChanged(
-  )
-```
 
 
 
