@@ -13,7 +13,8 @@
     "typecheck": "tsc",
     "write-heading-ids": "docusaurus write-heading-ids",
     "write-translations": "docusaurus write-translations",
-    "docgen": "npx solidity-docgen --solc-module solc-0.7 -i node_modules/@perp/curie-contract/contracts -o ./contracts -t ./templates && mv ./contracts/*.md ./docs/Contracts && mv ./contracts/interface/*.md ./docs/Interfaces && rm -rf ./contracts"
+    "docgen": "npx solidity-docgen --solc-module solc-0.7 -i node_modules/@perp/curie-contract/contracts -o ./contracts -t ./templates && mv ./contracts/*.md ./docs/Contracts && mv ./contracts/interface/*.md ./docs/Interfaces && rm -rf ./contracts",
+    "docgen:local": "npx solidity-docgen --solc-module solc-0.7 -i ../perp-lushan/contracts -o ./contracts -t ./templates && mv ./contracts/*.md ./docs/Contracts && mv ./contracts/interface/*.md ./docs/Interfaces && rm -rf ./contracts"
   },
   "browserslist": {
     "production": [
@@ -28,12 +29,15 @@
     ]
   },
   "devDependencies": {
+    "@chainlink/contracts": "0.1.7",
     "@code-blocks/prism": "^0.1.8",
     "@docusaurus/core": "2.0.0-beta.6",
     "@docusaurus/module-type-aliases": "2.0.0-beta.6",
     "@docusaurus/preset-classic": "2.0.0-beta.6",
     "@mdx-js/react": "^1.6.21",
+    "@openzeppelin/contracts": "3.4.0",
     "@openzeppelin/contracts-upgradeable": "3.4.2",
+    "@openzeppelin/hardhat-upgrades": "1.10.0",
     "@perp/curie-contract": "latest",
     "@perp/perp-oracle-contract": "^0.1.2",
     "@svgr/webpack": "^5.5.0",
