@@ -1,7 +1,4 @@
 
-
-
-
 ## Functions
 ### mintMaximumTo
 ```solidity

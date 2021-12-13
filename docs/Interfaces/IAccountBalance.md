@@ -1,43 +1,85 @@
 
-
-
-
 ## Functions
 ### modifyTakerBalance
 ```solidity
   function modifyTakerBalance(
-  ) external returns (int256, int256)
+    address trader,
+    address baseToken,
+    int256 base,
+    int256 quote
+  ) external returns (int256 takerPositionSize, int256 takerOpenNotional)
 ```
+Modify trader account balance
 
+Only used by `ClearingHouse` contract
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+|`baseToken` | address | The address of the baseToken
+|`base` | int256 | Modified amount of base
+|`quote` | int256 | Modified amount of quote
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`takerPositionSize` | int256 | Taker position size after modified
+|`takerOpenNotional` | int256 | Taker open notional after modified
 ### modifyOwedRealizedPnl
 ```solidity
   function modifyOwedRealizedPnl(
+    address trader,
+    int256 amount
   ) external
 ```
+Modify trader owedRealizedPnl
 
+Only used by `ClearingHouse` contract
 
-
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+|`amount` | int256 | Modified amount of owedRealizedPnl
 
 ### settleOwedRealizedPnl
 ```solidity
   function settleOwedRealizedPnl(
+    address trader
   ) external returns (int256 pnl)
 ```
+Settle owedRealizedPnl
 
-this function is now only called by Vault.withdraw()
+Only used by `Vault.withdraw()`
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
 
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`pnl` | int256 | Settled owedRealizedPnl
 ### settleQuoteToOwedRealizedPnl
 ```solidity
   function settleQuoteToOwedRealizedPnl(
+    address trader,
+    address baseToken,
+    int256 amount
   ) external
 ```
+Modify trader owedRealizedPnl
 
+Only used by `ClearingHouse` contract
 
-
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+|`baseToken` | address | The address of the baseToken
+|`amount` | int256 | Settled quote amount
 
 ### settleBalanceAndDeregister
 ```solidity
@@ -48,14 +90,15 @@ this function is now only called by Vault.withdraw()
     int256 fee
   ) external
 ```
-
 Settle account balance and deregister base token
 
+Only used by `ClearingHouse` contract
+
 #### Parameters:
-| Name | Type | Description                                                          |
-| :--- | :--- | :------------------------------------------------------------------- |
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`maker` | address | The address of the maker
-|`baseToken` | address | The address of the market's base token
+|`baseToken` | address | The address of the baseToken
 |`realizedPnl` | int256 | Amount of pnl realized
 |`fee` | int256 | Amount of fee collected from pool
 
@@ -66,13 +109,14 @@ Settle account balance and deregister base token
     address baseToken
   ) external
 ```
+Every time a trader's position value is checked, the base token list of this trader will be traversed;
+thus, this list should be kept as short as possible
 
-every time a trader's position value is checked, the base token list of this trader will be traversed;
-     thus, this list should be kept as short as possible
+Only used by `ClearingHouse` contract
 
 #### Parameters:
-| Name | Type | Description                                                          |
-| :--- | :--- | :------------------------------------------------------------------- |
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`trader` | address | The address of the trader
 |`baseToken` | address | The address of the trader's base token
 
@@ -83,193 +127,352 @@ every time a trader's position value is checked, the base token list of this tra
     address baseToken
   ) external
 ```
+Deregister baseToken from trader accountInfo
 
-this function is expensive
+Only used by `ClearingHouse` contract, this function is expensive, due to for loop
 
 #### Parameters:
-| Name | Type | Description                                                          |
-| :--- | :--- | :------------------------------------------------------------------- |
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`trader` | address | The address of the trader
 |`baseToken` | address | The address of the trader's base token
 
 ### updateTwPremiumGrowthGlobal
 ```solidity
   function updateTwPremiumGrowthGlobal(
+    address trader,
+    address baseToken,
+    int256 lastTwPremiumGrowthGlobalX96
   ) external
 ```
+Update trader Twap premium info
 
+Only used by `ClearingHouse` contract
 
-
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
+|`lastTwPremiumGrowthGlobalX96` | int256 | The last Twap Premium
 
 ### getClearingHouseConfig
 ```solidity
   function getClearingHouseConfig(
-  ) external returns (address)
+  ) external returns (address clearingHouseConfig)
 ```
+Get `ClearingHouseConfig` address
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`clearingHouseConfig` | address | The address of ClearingHouseConfig
 ### getOrderBook
 ```solidity
   function getOrderBook(
-  ) external returns (address)
+  ) external returns (address orderBook)
 ```
+Get `OrderBook` address
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`orderBook` | address | The address of OrderBook
 ### getVault
 ```solidity
   function getVault(
-  ) external returns (address)
+  ) external returns (address vault)
 ```
+Get `Vault` address
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`vault` | address | The address of Vault
 ### getBaseTokens
 ```solidity
   function getBaseTokens(
-  ) external returns (address[])
+    address trader
+  ) external returns (address[] baseTokens)
 ```
+Get trader registered baseTokens
 
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`baseTokens` | address[] | The array of baseToken address
 ### getAccountInfo
 ```solidity
   function getAccountInfo(
-  ) external returns (struct AccountMarket.Info)
+    address trader,
+    address baseToken
+  ) external returns (struct AccountMarket.Info traderAccountInfo)
 ```
+Get trader account info
 
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`traderAccountInfo` | struct AccountMarket.Info | The baseToken account info of trader
 ### getTakerOpenNotional
 ```solidity
   function getTakerOpenNotional(
-  ) external returns (int256)
+    address trader,
+    address baseToken
+  ) external returns (int256 openNotional)
 ```
+Get taker cost of trader's baseToken
 
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`openNotional` | int256 | The taker cost of trader's baseToken
 ### getTotalOpenNotional
 ```solidity
   function getTotalOpenNotional(
-  ) external returns (int256)
+    address trader,
+    address baseToken
+  ) external returns (int256 totalOpenNotional)
 ```
+Get total cost of trader's baseToken
 
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`totalOpenNotional`| address | the amount of quote token paid for a position when opening
+|`totalOpenNotional` | int256 | the amount of quote token paid for a position when opening
 ### getTotalDebtValue
 ```solidity
   function getTotalDebtValue(
-  ) external returns (uint256)
+    address trader
+  ) external returns (uint256 totalDebtValue)
 ```
+Get total debt value of trader
 
+Total debt value will relate to `Vault.getFreeCollateral()`
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`totalDebtValue` | uint256 | The debt value of trader
 ### getMarginRequirementForLiquidation
 ```solidity
   function getMarginRequirementForLiquidation(
-  ) external returns (int256)
+    address trader
+  ) external returns (int256 marginRequirementForLiquidation)
 ```
+Get margin requirement to check whether trader will be able to liquidate
 
-this is different from Vault._getTotalMarginRequirement(), which is for freeCollateral calculation
+This is different from `Vault._getTotalMarginRequirement()`, which is for freeCollateral calculation
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`int`| address | instead of uint, as it is compared with ClearingHouse.getAccountValue(), which is also an int
+|`marginRequirementForLiquidation` | int256 | It is compared with `ClearingHouse.getAccountValue` which is also an int
 ### getPnlAndPendingFee
 ```solidity
   function getPnlAndPendingFee(
+    address trader
   ) external returns (int256 owedRealizedPnl, int256 unrealizedPnl, uint256 pendingFee)
 ```
+Get owedRealizedPnl, realizedPnl and pending fee
 
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`owedRealizedPnl`| address | the pnl realized already but stored temporarily in AccountBalance
-|`unrealizedPnl`|  | the pnl not yet realized
-|`pendingFee`|  | the pending fee of maker earned
+|`owedRealizedPnl` | int256 | the pnl realized already but stored temporarily in AccountBalance
+|`unrealizedPnl` | int256 | the pnl not yet realized
+|`pendingFee` | uint256 | the pending fee of maker earned
 ### hasOrder
 ```solidity
   function hasOrder(
-  ) external returns (bool)
+    address trader
+  ) external returns (bool hasOrderOrNot)
 ```
+Check trader has open order or not
 
 
-
-
-### getBase
-```solidity
-  function getBase(
-  ) external returns (int256)
-```
-
-
-
-
-### getQuote
-```solidity
-  function getQuote(
-  ) external returns (int256)
-```
-
-
-
-
-### getTakerPositionSize
-```solidity
-  function getTakerPositionSize(
-  ) external returns (int256)
-```
-
-
-
-
-### getTotalPositionSize
-```solidity
-  function getTotalPositionSize(
-  ) external returns (int256)
-```
-
-
-
-
-### getTotalPositionValue
-```solidity
-  function getTotalPositionValue(
-  ) external returns (int256)
-```
-
-a negative returned value is only be used when calculating pnl
-we use 15 mins twap to calc position value
-
-
-### getTotalAbsPositionValue
-```solidity
-  function getTotalAbsPositionValue(
-  ) external returns (uint256)
-```
-
-
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`sum`| address | up positions value of every market, it calls `getTotalPositionValue` internally
+|`hasOrderOrNot` | bool | True of false
+### getBase
+```solidity
+  function getBase(
+    address trader,
+    address baseToken
+  ) external returns (int256 baseAmount)
+```
+Get trader base amount
+
+`base amount = takerPositionSize - orderBaseDebt`
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`baseAmount` | int256 | The base amount of trader's baseToken market
+### getQuote
+```solidity
+  function getQuote(
+    address trader,
+    address baseToken
+  ) external returns (int256 quoteAmount)
+```
+Get trader quote amount
+
+`quote amount = takerOpenNotional - orderQuoteDebt`
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`quoteAmount` | int256 | The quote amount of trader's baseToken market
+### getTakerPositionSize
+```solidity
+  function getTakerPositionSize(
+    address trader,
+    address baseToken
+  ) external returns (int256 takerPositionSize)
+```
+Get taker position size of trader's baseToken market
+
+This will only has taker position, can get maker impermanent position through `getTotalPositionSize`
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`takerPositionSize` | int256 | The taker position size of trader's baseToken market
+### getTotalPositionSize
+```solidity
+  function getTotalPositionSize(
+    address trader,
+    address baseToken
+  ) external returns (int256 totalPositionSize)
+```
+Get total position size of trader's baseToken market
+
+`total position size = taker position size + maker impermanent position size`
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`totalPositionSize` | int256 | The total position size of trader's baseToken market
+### getTotalPositionValue
+```solidity
+  function getTotalPositionValue(
+    address trader,
+    address baseToken
+  ) external returns (int256 totalPositionValue)
+```
+Get total position value of trader's baseToken market
+
+A negative returned value is only be used when calculating pnl,
+we use `15 mins` twap to calc position value
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`totalPositionValue` | int256 | Total position value of trader's baseToken market
+### getTotalAbsPositionValue
+```solidity
+  function getTotalAbsPositionValue(
+    address trader
+  ) external returns (uint256 totalAbsPositionValue)
+```
+Get all market position abs value of trader
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`totalAbsPositionValue` | uint256 | Sum up positions value of every market
 
 ## Events
 ### VaultChanged
@@ -281,8 +484,8 @@ we use 15 mins twap to calc position value
 
 
 #### Parameters:
-| Name                           | Type          | Description                                    |
-| :----------------------------- | :------------ | :--------------------------------------------- |
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`vault`| address | The address of the vault contract
 ### PnlRealized
 ```solidity
@@ -295,7 +498,7 @@ we use 15 mins twap to calc position value
 Emit whenever a trader's `owedRealizedPnl` is updated
 
 #### Parameters:
-| Name                           | Type          | Description                                    |
-| :----------------------------- | :------------ | :--------------------------------------------- |
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`trader`| address | The address of the trader
 |`amount`| int256 | The amount changed

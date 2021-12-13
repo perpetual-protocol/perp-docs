@@ -1,7 +1,4 @@
 
-
-
-
 ## Functions
 ### isInWhitelist
 ```solidity

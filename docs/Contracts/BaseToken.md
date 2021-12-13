@@ -1,7 +1,4 @@
 
-
-
-
 ## Functions
 ### initialize
 ```solidity
@@ -22,10 +19,14 @@
 Returns the index price of the token.
 
 #### Parameters:
-| Name | Type | Description                                                          |
-| :--- | :--- | :------------------------------------------------------------------- |
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`interval` | uint256 | The interval represents twap interval.
 
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`indexPrice` | uint256 | Twap price with interval
 ### getPriceFeed
 ```solidity
   function getPriceFeed(

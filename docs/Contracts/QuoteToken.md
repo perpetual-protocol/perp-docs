@@ -1,7 +1,4 @@
 
-
-
-
 ## Functions
 ### initialize
 ```solidity

@@ -1,7 +1,4 @@
 
-
-
-
 ## Functions
 ### getPriceFeed
 ```solidity
