@@ -1,9 +1,3 @@
-{{{natspec.userdoc}}}
-{{{natspec.devdoc}}}
-
-{{#if ownStructs}}
-## Structs
-{{/if}}
 {{#ownStructs}}
 ### {{name}}
 ```solidity
@@ -13,12 +7,12 @@
     {{/each}}
   )
 ```
-{{#if natspec.userdoc}}{{natspec.userdoc}}{{/if}}
-{{#if natspec.devdoc}}{{natspec.devdoc}}{{/if}}
+{{natspec.userdoc}}
+{{natspec.devdoc}}
 {{#if natspec.params}}
 #### Parameters:
-| Name                           | Type          | Description                                    |
-| :----------------------------- | :------------ | :--------------------------------------------- |
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 {{#natspec.params}}
 |`{{param}}`| {{#lookup ../args.types @index}}{{/lookup}} | {{{description}}}{{/natspec.params}}{{/if}}
 {{/ownStructs}}
@@ -36,12 +30,12 @@
     {{/natspec.params}}
   ) {{visibility}}{{#if outputs}} returns ({{outputs}}){{/if}}
 ```
-{{#if natspec.userdoc}}{{natspec.userdoc}}{{/if}}
-{{#if natspec.devdoc}}{{natspec.devdoc}}{{/if}}
+{{natspec.userdoc}}
+{{natspec.devdoc}}
 {{#if natspec.params}}
 #### Parameters:
-| Name | Type | Description                                                          |
-| :--- | :--- | :------------------------------------------------------------------- |
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 {{#natspec.params}}
 |`{{param}}` | {{#lookup ../args.types @index}}{{/lookup}} | {{ description }}{{/natspec.params}}{{/if}}
 {{#if natspec.returns}}
@@ -49,7 +43,7 @@
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 {{#natspec.returns}}
-|`{{param}}`| {{#lookup ../args.types @index}}{{/lookup}} | {{{description}}}{{/natspec.returns}}{{/if}}
+|`{{param}}` | {{#lookup ../outputs.types @index}}{{/lookup}} | {{ description }}{{/natspec.returns}}{{/if}}
 {{/if}}
 {{/ownFunctions}}
 
@@ -65,12 +59,12 @@
     {{/natspec.params}}
   )
 ```
-{{#if natspec.userdoc}}{{natspec.userdoc}}{{/if}}
-{{#if natspec.devdoc}}{{natspec.devdoc}}{{/if}}
+{{natspec.userdoc}}
+{{natspec.devdoc}}
 {{#if natspec.params}}
 #### Parameters:
-| Name                           | Type          | Description                                    |
-| :----------------------------- | :------------ | :--------------------------------------------- |
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 {{#natspec.params}}
 |`{{param}}`| {{#lookup ../args.types @index}}{{/lookup}} | {{{description}}}{{/natspec.params}}{{/if}}
 {{/ownEvents}}
