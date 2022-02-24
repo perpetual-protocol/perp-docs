@@ -3,67 +3,52 @@
 ### getMaxMarketsPerAccount
 ```solidity
   function getMaxMarketsPerAccount(
-  ) external returns (uint8 maxMarketsPerAccount)
+  ) external returns (uint8)
 ```
 
 
 
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`maxMarketsPerAccount` | uint8 | Max value of total markets per account
+
 ### getImRatio
 ```solidity
   function getImRatio(
-  ) external returns (uint24 imRatio)
+  ) external returns (uint24)
 ```
 
 
 
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`imRatio` | uint24 | Initial margin ratio
+
 ### getMmRatio
 ```solidity
   function getMmRatio(
-  ) external returns (uint24 mmRatio)
+  ) external returns (uint24)
 ```
 
 
 
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`mmRatio` | uint24 | Maintenance margin requirement ratio
+
 ### getLiquidationPenaltyRatio
 ```solidity
   function getLiquidationPenaltyRatio(
-  ) external returns (uint24 liquidationPenaltyRatio)
+  ) external returns (uint24)
 ```
 
 
 
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`liquidationPenaltyRatio` | uint24 | Liquidation penalty ratio
+
 ### getPartialCloseRatio
 ```solidity
   function getPartialCloseRatio(
-  ) external returns (uint24 partialCloseRatio)
+  ) external returns (uint24)
 ```
 
 
 
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`partialCloseRatio` | uint24 | Partial close ratio
+
 ### getTwapInterval
 ```solidity
   function getTwapInterval(
-  ) external returns (uint32 twapInterval)
+  ) external returns (uint32)
 ```
 
 
@@ -71,29 +56,32 @@
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`twapInterval` | uint32 | TwapInterval for funding and prices (mark & index) calculations
+|`twapInterval` | uint32 | for funding and prices (mark & index) calculations
 ### getSettlementTokenBalanceCap
 ```solidity
   function getSettlementTokenBalanceCap(
-  ) external returns (uint256 settlementTokenBalanceCap)
+  ) external returns (uint256)
 ```
 
 
 
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`settlementTokenBalanceCap` | uint256 | Max value of settlement token balance
+
 ### getMaxFundingRate
 ```solidity
   function getMaxFundingRate(
-  ) external returns (uint24 maxFundingRate)
+  ) external returns (uint24)
 ```
 
 
 
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`maxFundingRate` | uint24 | Max value of funding rate
+
+### isBackstopLiquidityProvider
+```solidity
+  function isBackstopLiquidityProvider(
+  ) external returns (bool)
+```
+
+
+
+
 

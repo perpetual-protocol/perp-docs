@@ -10,3 +10,12 @@
 
 
 
+## Events
+### PriceFeedChanged
+```solidity
+  event PriceFeedChanged(
+  )
+```
+
+
+
