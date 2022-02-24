@@ -63,15 +63,6 @@
 
 
 
-### setBackstopLiquidityProvider
-```solidity
-  function setBackstopLiquidityProvider(
-  ) external
-```
-
-
-
-
 ### getMaxMarketsPerAccount
 ```solidity
   function getMaxMarketsPerAccount(
@@ -80,7 +71,10 @@
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`maxMarketsPerAccount` | uint8 | Max value of total markets per account
 ### getImRatio
 ```solidity
   function getImRatio(
@@ -89,7 +83,10 @@
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`imRatio` | uint24 | Initial margin ratio
 ### getMmRatio
 ```solidity
   function getMmRatio(
@@ -98,7 +95,10 @@
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`mmRatio` | uint24 | Maintenance margin requirement ratio
 ### getLiquidationPenaltyRatio
 ```solidity
   function getLiquidationPenaltyRatio(
@@ -107,7 +107,10 @@
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`liquidationPenaltyRatio` | uint24 | Liquidation penalty ratio
 ### getPartialCloseRatio
 ```solidity
   function getPartialCloseRatio(
@@ -116,7 +119,10 @@
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`partialCloseRatio` | uint24 | Partial close ratio
 ### getTwapInterval
 ```solidity
   function getTwapInterval(
@@ -128,7 +134,7 @@
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`twapInterval` | uint32 | for funding and prices (mark & index) calculations
+|`twapInterval` | uint32 | TwapInterval for funding and prices (mark & index) calculations
 ### getSettlementTokenBalanceCap
 ```solidity
   function getSettlementTokenBalanceCap(
@@ -137,7 +143,10 @@
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`settlementTokenBalanceCap` | uint256 | Max value of settlement token balance
 ### getMaxFundingRate
 ```solidity
   function getMaxFundingRate(
@@ -146,16 +155,10 @@
 
 
 
-
-### isBackstopLiquidityProvider
-```solidity
-  function isBackstopLiquidityProvider(
-  ) external returns (bool)
-```
-
-
-
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`maxFundingRate` | uint24 | Max value of funding rate
 
 ## Events
 ### TwapIntervalChanged
@@ -201,14 +204,6 @@
 ### MaxFundingRateChanged
 ```solidity
   event MaxFundingRateChanged(
-  )
-```
-
-
-
-### BackstopLiquidityProviderChanged
-```solidity
-  event BackstopLiquidityProviderChanged(
   )
 ```
 

@@ -9,15 +9,6 @@
 
 
 
-### setPriceFeed
-```solidity
-  function setPriceFeed(
-  ) external
-```
-
-
-
-
 ### getIndexPrice
 ```solidity
   function getIndexPrice(
@@ -32,6 +23,10 @@ Returns the index price of the token.
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`interval` | uint256 | The interval represents twap interval.
 
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`indexPrice` | uint256 | Twap price with interval
 ### getPriceFeed
 ```solidity
   function getPriceFeed(

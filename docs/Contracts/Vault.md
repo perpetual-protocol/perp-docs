@@ -34,14 +34,15 @@
     uint256 amountX10_D
   ) external
 ```
+Deposit collateral into vault
 
+once multi-collateral is implemented, the token is not limited to settlementToken
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`token` | address | the address of the token to deposit;
-       once multi-collateral is implemented, the token is not limited to settlementToken
-|`amountX10_D` | uint256 | the amount of the token to deposit in decimals D (D = _decimals)
+|`token` | address | The address of the token to deposit
+|`amountX10_D` | uint256 | The amount of the token to deposit in decimals D (D = _decimals)
 
 ### withdraw
 ```solidity
@@ -50,99 +51,134 @@
     uint256 amountX10_D
   ) external
 ```
+Withdraw collateral from vault
 
+once multi-collateral is implemented, the token is not limited to settlementToken
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`token` | address | the address of the token sender is going to withdraw
-       once multi-collateral is implemented, the token is not limited to settlementToken
-|`amountX10_D` | uint256 | the amount of the token to withdraw in decimals D (D = _decimals)
+|`token` | address | The address of the token sender is going to withdraw
+|`amountX10_D` | uint256 | The amount of the token to withdraw in decimals D (D = _decimals)
 
 ### getSettlementToken
 ```solidity
   function getSettlementToken(
   ) external returns (address)
 ```
+Get settlement token address
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`settlementToken` | address | The address of settlement token
 ### decimals
 ```solidity
   function decimals(
   ) external returns (uint8)
 ```
+Get settlement token decimals
 
 cached the settlement token's decimal for gas optimization
 
 
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`decimals` | uint8 | The decimals of settlement token
 ### getTotalDebt
 ```solidity
   function getTotalDebt(
   ) external returns (uint256)
 ```
+Get the debt amount in vault
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`debtAmount` | uint256 | The debt amount
 ### getClearingHouseConfig
 ```solidity
   function getClearingHouseConfig(
   ) external returns (address)
 ```
+Get `ClearingHouseConfig` contract address
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`clearingHouseConfig` | address | The address of `ClearingHouseConfig` contract
 ### getAccountBalance
 ```solidity
   function getAccountBalance(
   ) external returns (address)
 ```
+Get `AccountBalance` contract address
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`accountBalance` | address | The address of `AccountBalance` contract
 ### getInsuranceFund
 ```solidity
   function getInsuranceFund(
   ) external returns (address)
 ```
+Get `InsuranceFund` contract address
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`insuranceFund` | address | The address of `InsuranceFund` contract
 ### getExchange
 ```solidity
   function getExchange(
   ) external returns (address)
 ```
+Get `Exchange` contract address
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`exchange` | address | The address of `Exchange` contract
 ### getClearingHouse
 ```solidity
   function getClearingHouse(
   ) external returns (address)
 ```
+Get `ClearingHouse` contract address
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`clearingHouse` | address | The address of `ClearingHouse` contract
 ### getFreeCollateral
 ```solidity
   function getFreeCollateral(
     address trader
   ) external returns (uint256)
 ```
+Get free collateral amount of specified trader
 
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`trader` | address | The address of the trader to query
+|`trader` | address | The address of the trader
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
@@ -153,10 +189,14 @@ cached the settlement token's decimal for gas optimization
   function getBalance(
   ) public returns (int256)
 ```
+Get the balance in vault of specified account
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`balance` | int256 | The balance amount
 ### getFreeCollateralByRatio
 ```solidity
   function getFreeCollateralByRatio(
@@ -164,15 +204,17 @@ cached the settlement token's decimal for gas optimization
     uint24 ratio
   ) public returns (int256)
 ```
+Get free collateral amount of specified trader and collateral ratio
 
-there are three configurations for different insolvency risk tolerances: conservative, moderate, aggressive
-     we will start with the conservative one and gradually move to aggressive to increase capital efficiency
+There are three configurations for different insolvency risk tolerances: **conservative, moderate,
+aggressive**, we will start with the **conservative** one and gradually move to aggressive to
+increase capital efficiency
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`trader` | address | the address of the trader
-|`ratio` | uint24 | the margin requirement ratio, imRatio or mmRatio
+|`trader` | address | The address of the trader
+|`ratio` | uint24 | The margin requirement ratio, imRatio or mmRatio
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
