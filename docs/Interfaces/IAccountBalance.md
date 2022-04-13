@@ -7,7 +7,7 @@
     address baseToken,
     int256 base,
     int256 quote
-  ) external returns (int256, int256)
+  ) external returns (int256 takerPositionSize, int256 takerOpenNotional)
 ```
 Modify trader account balance
 
@@ -156,10 +156,34 @@ Only used by `ClearingHouse` contract
 |`baseToken` | address | The address of baseToken
 |`lastTwPremiumGrowthGlobalX96` | int256 | The last Twap Premium
 
+### settlePositionInClosedMarket
+```solidity
+  function settlePositionInClosedMarket(
+    address trader,
+    address baseToken
+  ) external returns (int256 positionNotional, int256 openNotional, int256 realizedPnl, uint256 closedPrice)
+```
+Settle trader's PnL in closed market
+
+Only used by `ClearingHouse`
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+|`baseToken` | address | The address of the trader's base token
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`positionNotional` | int256 | Taker's position notional settled with closed price
+|`openNotional` | int256 | Taker's open notional
+|`realizedPnl` | int256 | Settled realized pnl
+|`closedPrice` | uint256 | The closed price of the closed market
 ### getClearingHouseConfig
 ```solidity
   function getClearingHouseConfig(
-  ) external returns (address)
+  ) external returns (address clearingHouseConfig)
 ```
 Get `ClearingHouseConfig` address
 
@@ -172,7 +196,7 @@ Get `ClearingHouseConfig` address
 ### getOrderBook
 ```solidity
   function getOrderBook(
-  ) external returns (address)
+  ) external returns (address orderBook)
 ```
 Get `OrderBook` address
 
@@ -185,7 +209,7 @@ Get `OrderBook` address
 ### getVault
 ```solidity
   function getVault(
-  ) external returns (address)
+  ) external returns (address vault)
 ```
 Get `Vault` address
 
@@ -199,7 +223,7 @@ Get `Vault` address
 ```solidity
   function getBaseTokens(
     address trader
-  ) external returns (address[])
+  ) external returns (address[] baseTokens)
 ```
 Get trader registered baseTokens
 
@@ -218,7 +242,7 @@ Get trader registered baseTokens
   function getAccountInfo(
     address trader,
     address baseToken
-  ) external returns (struct AccountMarket.Info)
+  ) external returns (struct AccountMarket.Info traderAccountInfo)
 ```
 Get trader account info
 
@@ -238,7 +262,7 @@ Get trader account info
   function getTakerOpenNotional(
     address trader,
     address baseToken
-  ) external returns (int256)
+  ) external returns (int256 openNotional)
 ```
 Get taker cost of trader's baseToken
 
@@ -258,7 +282,7 @@ Get taker cost of trader's baseToken
   function getTotalOpenNotional(
     address trader,
     address baseToken
-  ) external returns (int256)
+  ) external returns (int256 totalOpenNotional)
 ```
 Get total cost of trader's baseToken
 
@@ -277,7 +301,7 @@ Get total cost of trader's baseToken
 ```solidity
   function getTotalDebtValue(
     address trader
-  ) external returns (uint256)
+  ) external returns (uint256 totalDebtValue)
 ```
 Get total debt value of trader
 
@@ -296,7 +320,7 @@ Total debt value will relate to `Vault.getFreeCollateral()`
 ```solidity
   function getMarginRequirementForLiquidation(
     address trader
-  ) external returns (int256)
+  ) external returns (int256 marginRequirementForLiquidation)
 ```
 Get margin requirement to check whether trader will be able to liquidate
 
@@ -335,9 +359,9 @@ Get owedRealizedPnl, realizedPnl and pending fee
 ```solidity
   function hasOrder(
     address trader
-  ) external returns (bool)
+  ) external returns (bool hasOrder)
 ```
-Check trader has open order or not
+Check trader has open order in open/closed market.
 
 
 #### Parameters:
@@ -348,13 +372,13 @@ Check trader has open order or not
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`hasOrderOrNot` | bool | True of false
+|`hasOrder` | bool | True of false
 ### getBase
 ```solidity
   function getBase(
     address trader,
     address baseToken
-  ) external returns (int256)
+  ) external returns (int256 baseAmount)
 ```
 Get trader base amount
 
@@ -375,7 +399,7 @@ Get trader base amount
   function getQuote(
     address trader,
     address baseToken
-  ) external returns (int256)
+  ) external returns (int256 quoteAmount)
 ```
 Get trader quote amount
 
@@ -396,7 +420,7 @@ Get trader quote amount
   function getTakerPositionSize(
     address trader,
     address baseToken
-  ) external returns (int256)
+  ) external returns (int256 takerPositionSize)
 ```
 Get taker position size of trader's baseToken market
 
@@ -417,7 +441,7 @@ This will only has taker position, can get maker impermanent position through `g
   function getTotalPositionSize(
     address trader,
     address baseToken
-  ) external returns (int256)
+  ) external returns (int256 totalPositionSize)
 ```
 Get total position size of trader's baseToken market
 
@@ -438,7 +462,7 @@ Get total position size of trader's baseToken market
   function getTotalPositionValue(
     address trader,
     address baseToken
-  ) external returns (int256)
+  ) external returns (int256 totalPositionValue)
 ```
 Get total position value of trader's baseToken market
 
@@ -459,7 +483,7 @@ we use `15 mins` twap to calc position value
 ```solidity
   function getTotalAbsPositionValue(
     address trader
-  ) external returns (uint256)
+  ) external returns (uint256 totalAbsPositionValue)
 ```
 Get all market position abs value of trader
 

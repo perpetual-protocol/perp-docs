@@ -100,7 +100,7 @@
 ```solidity
   function addLiquidity(
     struct IClearingHouse.AddLiquidityParams params
-  ) external returns (struct IClearingHouse.AddLiquidityResponse)
+  ) external returns (struct IClearingHouse.AddLiquidityResponse response)
 ```
 Maker can call `addLiquidity` to provide liquidity on Uniswap V3 pool
 
@@ -281,11 +281,32 @@ This function won't fail if the maker has no order but fails when maker is not u
 |`maker` | address | The address of maker
 |`baseToken` | address | The address of baseToken
 
+### quitMarket
+```solidity
+  function quitMarket(
+    address trader,
+    address baseToken
+  ) external returns (uint256 base, uint256 quote)
+```
+Close all positions of a trader in the closed market
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`base` | uint256 | The amount of base token that is closed
+|`quote` | uint256 | The amount of quote token that is closed
 ### getAccountValue
 ```solidity
   function getAccountValue(
     address trader
-  ) external returns (int256)
+  ) external returns (int256 accountValue)
 ```
 Get account value of trader
 
@@ -498,6 +519,31 @@ Emitted when taker's position is being changed
 |`openNotional`| int256 | The cost of open/close position, < 0: long, > 0: short
 |`realizedPnl`| int256 | The realized Pnl after open/close position
 |`sqrtPriceAfterX96`| uint256 | The sqrt price after swap, in X96
+### PositionClosed
+```solidity
+  event PositionClosed(
+    address trader,
+    address baseToken,
+    int256 closedPositionSize,
+    int256 closedPositionNotional,
+    int256 openNotional,
+    int256 realizedPnl,
+    uint256 closedPrice
+  )
+```
+Emitted when taker close her position in closed market
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader`| address | Trader address
+|`baseToken`| address | The address of virtual base token(ETH, BTC, etc...)
+|`closedPositionSize`| int256 | Trader's position size in closed market
+|`closedPositionNotional`| int256 | Trader's position notional in closed market, based on closed price
+|`openNotional`| int256 | The cost of open/close position, < 0: long, > 0: short
+|`realizedPnl`| int256 | The realized Pnl after close position
+|`closedPrice`| uint256 | The close price of position
 ### FundingPaymentSettled
 ```solidity
   event FundingPaymentSettled(

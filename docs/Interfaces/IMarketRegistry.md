@@ -241,6 +241,7 @@ Emitted when the fee ratio of a market is updated.
 ### InsuranceFundFeeRatioChanged
 ```solidity
   event InsuranceFundFeeRatioChanged(
+    address baseToken,
     uint24 feeRatio
   )
 ```
@@ -250,6 +251,7 @@ Emitted when the insurance fund fee ratio is updated.
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`baseToken`| address | The address of the base token
 |`feeRatio`| uint24 | Insurance fund fee ratio
 ### MaxOrdersPerMarketChanged
 ```solidity

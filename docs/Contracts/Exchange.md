@@ -121,14 +121,16 @@ can only be called from ClearingHouse
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`swapResponse` | struct IExchange.SwapResponse | The result of the swap
+|`The` | struct IExchange.SwapResponse | result of the swap
+
 ### settleFunding
 ```solidity
   function settleFunding(
   ) external returns (int256 fundingPayment, struct Funding.Growth fundingGrowthGlobal)
 ```
+Settle the funding payment for the time interval since the last settlement
 
-this function should be called at the beginning of every high-level function, such as openPosition()
+This function should be called at the beginning of every high-level function, such as `openPosition()`
      while it doesn't matter who calls this function
      this function 1. settles personal funding payment 2. updates global funding growth
      personal funding payment is settled whenever there is pending funding payment

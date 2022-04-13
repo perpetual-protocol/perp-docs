@@ -82,8 +82,9 @@ can only be called from ClearingHouse
   function settleFunding(
   ) external returns (int256 fundingPayment, struct Funding.Growth fundingGrowthGlobal)
 ```
+Settle the funding payment for the time interval since the last settlement
 
-this function should be called at the beginning of every high-level function, such as openPosition()
+This function should be called at the beginning of every high-level function, such as `openPosition()`
      while it doesn't matter who calls this function
      this function 1. settles personal funding payment 2. updates global funding growth
      personal funding payment is settled whenever there is pending funding payment
@@ -99,7 +100,7 @@ this function should be called at the beginning of every high-level function, su
 ```solidity
   function getMaxTickCrossedWithinBlock(
     address baseToken
-  ) external returns (uint24)
+  ) external returns (uint24 maxTickCrossedWithinBlock)
 ```
 Get the max ticks allowed to be crossed within a block when reducing position
 
@@ -116,7 +117,7 @@ Get the max ticks allowed to be crossed within a block when reducing position
 ### getAllPendingFundingPayment
 ```solidity
   function getAllPendingFundingPayment(
-  ) external returns (int256)
+  ) external returns (int256 pendingFundingPayment)
 ```
 Get all the pending funding payment for a trader
 
@@ -130,7 +131,7 @@ Positive value means the trader pays funding, negative value means the trader re
 ### getPendingFundingPayment
 ```solidity
   function getPendingFundingPayment(
-  ) external returns (int256)
+  ) external returns (int256 pendingFundingPayment)
 ```
 Get the pending funding payment for a trader in a given market
 

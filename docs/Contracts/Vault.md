@@ -44,6 +44,24 @@ once multi-collateral is implemented, the token is not limited to settlementToke
 |`token` | address | The address of the token to deposit
 |`amountX10_D` | uint256 | The amount of the token to deposit in decimals D (D = _decimals)
 
+### depositFor
+```solidity
+  function depositFor(
+    address to,
+    address token,
+    uint256 amountX10_D
+  ) external
+```
+Deposit the collateral token for other account
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`to` | address | The address of the account to deposit to
+|`token` | address | The address of collateral token
+|`amountX10_D` | uint256 | The amount of the token to deposit in decimals D (D = _decimals)
+
 ### withdraw
 ```solidity
   function withdraw(
@@ -189,10 +207,14 @@ Get free collateral amount of specified trader
   function getBalance(
   ) public returns (int256)
 ```
+Get the balance in vault of specified account
 
 
 
-
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`balance` | int256 | The balance amount
 ### getFreeCollateralByRatio
 ```solidity
   function getFreeCollateralByRatio(

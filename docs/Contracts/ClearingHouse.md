@@ -251,6 +251,27 @@ This function won't fail if the maker has no order but fails when maker is not u
 |`maker` | address | The address of maker
 |`baseToken` | address | The address of baseToken
 
+### quitMarket
+```solidity
+  function quitMarket(
+    address trader,
+    address baseToken
+  ) external returns (uint256 base, uint256 quote)
+```
+Close all positions of a trader in the closed market
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`base` | uint256 | The amount of base token that is closed
+|`quote` | uint256 | The amount of quote token that is closed
 ### uniswapV3MintCallback
 ```solidity
   function uniswapV3MintCallback(
