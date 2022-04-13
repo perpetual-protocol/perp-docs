@@ -174,6 +174,30 @@ Only used by `ClearingHouse` contract
 |`baseToken` | address | The address of baseToken
 |`lastTwPremiumGrowthGlobalX96` | int256 | The last Twap Premium
 
+### settlePositionInClosedMarket
+```solidity
+  function settlePositionInClosedMarket(
+    address trader,
+    address baseToken
+  ) external returns (int256 positionNotional, int256 openNotional, int256 realizedPnl, uint256 closedPrice)
+```
+Settle trader's PnL in closed market
+
+we don't do swap to get position notional here.
+     we define the position notional in a closed market is `closed price * position size`
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+|`baseToken` | address | The address of the trader's base token
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`positionNotional` | int256 | Taker's position notional settled with closed price
+|`openNotional` | int256 | Taker's open notional
+|`realizedPnl` | int256 | Settled realized pnl
+|`closedPrice` | uint256 | The closed price of the closed market
 ### getClearingHouseConfig
 ```solidity
   function getClearingHouseConfig(
@@ -333,7 +357,7 @@ Get owedRealizedPnl, realizedPnl and pending fee
     address trader
   ) external returns (bool)
 ```
-Check trader has open order or not
+Check trader has open order in open/closed market.
 
 
 #### Parameters:
@@ -344,7 +368,7 @@ Check trader has open order or not
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`hasOrderOrNot` | bool | True of false
+|`hasOrder` | bool | True of false
 ### getBase
 ```solidity
   function getBase(

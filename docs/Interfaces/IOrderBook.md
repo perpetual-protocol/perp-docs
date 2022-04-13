@@ -113,7 +113,7 @@ Only used by `ClearingHouse` contract
 ```solidity
   function removeLiquidity(
     struct IOrderBook.RemoveLiquidityParams params
-  ) external returns (struct IOrderBook.RemoveLiquidityResponse)
+  ) external returns (struct IOrderBook.RemoveLiquidityResponse response)
 ```
 Remove liquidity logic, only used by `ClearingHouse` contract
 
@@ -184,7 +184,7 @@ only can be called by `ClearingHouse` contract;
   function getOpenOrderIds(
     address trader,
     address baseToken
-  ) external returns (bytes32[])
+  ) external returns (bytes32[] orderIds)
 ```
 Get open order ids of a trader in the given market
 
@@ -203,7 +203,7 @@ Get open order ids of a trader in the given market
 ```solidity
   function getOpenOrderById(
     bytes32 orderId
-  ) external returns (struct OpenOrder.Info)
+  ) external returns (struct OpenOrder.Info info)
 ```
 Get open order info by given order id
 
@@ -224,7 +224,7 @@ Get open order info by given order id
     address baseToken,
     int24 upperTick,
     int24 lowerTick
-  ) external returns (struct OpenOrder.Info)
+  ) external returns (struct OpenOrder.Info info)
 ```
 Get open order info by given base token, upper tick and lower tick
 
@@ -246,7 +246,7 @@ Get open order info by given base token, upper tick and lower tick
   function hasOrder(
     address trader,
     address[] tokens
-  ) external returns (bool)
+  ) external returns (bool hasOrder)
 ```
 Check if the specified trader has order in given markets
 
@@ -311,7 +311,7 @@ Get the total token amount (quote or base) and pending fees of all orders in the
     address trader,
     address baseToken,
     bool fetchBase
-  ) external returns (uint256)
+  ) external returns (uint256 debtAmount)
 ```
 Get the total debt token amount (base or quote) of all orders in the given market
 
@@ -350,7 +350,7 @@ funding payment of orders. **Normally you won't need to use this function**
     address baseToken,
     int24 lowerTick,
     int24 upperTick
-  ) external returns (uint256)
+  ) external returns (uint256 fee)
 ```
 Get the pending fees of a order
 
@@ -370,7 +370,7 @@ Get the pending fees of a order
 ### getExchange
 ```solidity
   function getExchange(
-  ) external returns (address)
+  ) external returns (address exchange)
 ```
 Get `Exchange` contract address
 
