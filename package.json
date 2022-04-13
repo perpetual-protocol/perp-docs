@@ -38,7 +38,7 @@
     "@openzeppelin/contracts": "3.4.0",
     "@openzeppelin/contracts-upgradeable": "3.4.2",
     "@openzeppelin/hardhat-upgrades": "1.10.0",
-    "@perp/curie-contract": "git+ssh://git@github.com:perpetual-protocol/perp-lushan.git#main",
+    "@perp/curie-contract": "1.1.0",
     "@perp/perp-oracle-contract": "0.3.0",
     "@svgr/webpack": "^5.5.0",
     "@tsconfig/docusaurus": "^1.0.4",
