@@ -341,7 +341,7 @@ This is different from `Vault._getTotalMarginRequirement()`, which is for freeCo
     address trader
   ) external returns (int256 owedRealizedPnl, int256 unrealizedPnl, uint256 pendingFee)
 ```
-Get owedRealizedPnl, realizedPnl and pending fee
+Get owedRealizedPnl, unrealizedPnl and pending fee
 
 
 #### Parameters:
