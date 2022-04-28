@@ -4,25 +4,24 @@
 ```solidity
   function deposit(
     address token,
-    uint256 amountX10_D
+    uint256 amount
   ) external
 ```
 Deposit collateral into vault
 
-once multi-collateral is implemented, the token is not limited to settlementToken
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`token` | address | The address of the token to deposit
-|`amountX10_D` | uint256 | The amount of the token to deposit in decimals D (D = _decimals)
+|`amount` | uint256 | The amount of the token to deposit
 
 ### depositFor
 ```solidity
   function depositFor(
     address to,
     address token,
-    uint256 amountX10_D
+    uint256 amount
   ) external
 ```
 Deposit the collateral token for other account
@@ -33,45 +32,147 @@ Deposit the collateral token for other account
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`to` | address | The address of the account to deposit to
 |`token` | address | The address of collateral token
-|`amountX10_D` | uint256 | The amount of the token to deposit in decimals D (D = _decimals)
+|`amount` | uint256 | The amount of the token to deposit
+
+### depositEther
+```solidity
+  function depositEther(
+  ) external
+```
+Deposit ETH as collateral into vault
+
+
+
+### depositEtherFor
+```solidity
+  function depositEtherFor(
+    address to
+  ) external
+```
+Deposit ETH as collateral for specified account
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`to` | address | The address of the account to deposit to
 
 ### withdraw
 ```solidity
   function withdraw(
     address token,
-    uint256 amountX10_D
+    uint256 amount
   ) external
 ```
 Withdraw collateral from vault
 
-once multi-collateral is implemented, the token is not limited to settlementToken
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`token` | address | The address of the token sender is going to withdraw
-|`amountX10_D` | uint256 | The amount of the token to withdraw in decimals D (D = _decimals)
+|`token` | address | The address of the token to withdraw
+|`amount` | uint256 | The amount of the token to withdraw
 
+### withdrawEther
+```solidity
+  function withdrawEther(
+    uint256 amount
+  ) external
+```
+Withdraw ETH from vault
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`amount` | uint256 | The amount of the ETH to withdraw
+
+### liquidateCollateral
+```solidity
+  function liquidateCollateral(
+    address trader,
+    address token,
+    uint256 amount,
+    bool isDenominatedInSettlementToken
+  ) external returns (uint256)
+```
+Liquidate trader's collateral by given settlement token amount or non settlement token amount
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader that will be liquidated
+|`token` | address | The address of non settlement collateral token that the trader will be liquidated
+|`amount` | uint256 | The amount of settlement token that the liquidator will repay for trader or
+              the amount of non-settlement collateral token that the liquidator will charge from trader
+|`isDenominatedInSettlementToken` | bool | Whether the amount is denominated in settlement token or not
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`amount` | uint256 | The amount of a non-settlement token (in its native decimals) that is liquidated
+        when `isDenominatedInSettlementToken` is true or the amount of settlement token that is repaid
+        when `isDenominatedInSettlementToken` is false
 ### getBalance
 ```solidity
   function getBalance(
   ) external returns (int256 balance)
 ```
-Get the balance in vault of specified account
+Get the specified trader's settlement token balance, without pending fee, funding payment
+        and owed realized PnL
+
+The function is equivalent to `getBalanceByToken(trader, settlementToken)`
+     We keep this function solely for backward-compatibility with the older single-collateral system.
+     In practical applications, the developer might want to use `getSettlementTokenValue()` instead
+     because the latter includes pending fee, funding payment etc.
+     and therefore more accurately reflects a trader's settlement (ex. USDC) balance
+
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`balance` | int256 | The balance amount (in settlement token's decimals)
+### getBalanceByToken
+```solidity
+  function getBalanceByToken(
+    address trader,
+    address token
+  ) external returns (int256 balance)
+```
+Get the balance of Vault of the specified collateral token and trader
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+|`token` | address | The address of the collateral token
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`balance` | int256 | The balance amount (in its native decimals)
+### getCollateralTokens
+```solidity
+  function getCollateralTokens(
+  ) external returns (address[] collateralTokens)
+```
+Get they array of collateral token addresses that a trader has
 
 
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`balance` | int256 | The balance amount
-### getFreeCollateral
+|`collateralTokens` | address[] | array of collateral token addresses
+### getAccountValue
 ```solidity
-  function getFreeCollateral(
+  function getAccountValue(
     address trader
-  ) external returns (uint256 freeCollateral)
+  ) external returns (int256)
 ```
-Get free collateral amount of specified trader
+Get account value (denominated in settlement token) of the specified trader
 
 
 #### Parameters:
@@ -82,7 +183,26 @@ Get free collateral amount of specified trader
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`freeCollateral` | uint256 | Max(0, amount of collateral available for withdraw or opening new positions or orders)
+|`accountValue` | int256 | account value (in settlement token's decimals)
+### getFreeCollateral
+```solidity
+  function getFreeCollateral(
+    address trader
+  ) external returns (uint256 freeCollateral)
+```
+Get the free collateral value denominated in the settlement token of the specified trader
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`freeCollateral` | uint256 | the value (in settlement token's decimals) of free collateral available
+        for withdraw or opening new positions or orders)
 ### getFreeCollateralByRatio
 ```solidity
   function getFreeCollateralByRatio(
@@ -90,11 +210,11 @@ Get free collateral amount of specified trader
     uint24 ratio
   ) external returns (int256 freeCollateralByRatio)
 ```
-Get free collateral amount of specified trader and collateral ratio
+Get the free collateral amount of the specified trader and collateral ratio
 
-There are three configurations for different insolvency risk tolerances: **conservative, moderate,
-aggressive**, we will start with the **conservative** one and gradually move to aggressive to
-increase capital efficiency
+There are three configurations for different insolvency risk tolerances:
+     **conservative, moderate &aggressive**. We will start with the **conservative** one
+     and gradually move to **aggressive** to increase capital efficiency
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
@@ -105,24 +225,182 @@ increase capital efficiency
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`freeCollateralByRatio` | int256 | freeCollateral, by using the input margin requirement ratio; can be negative
+|`freeCollateralByRatio` | int256 | freeCollateral (in settlement token's decimals), by using the
+        input margin requirement ratio; can be negative
+### getFreeCollateralByToken
+```solidity
+  function getFreeCollateralByToken(
+    address trader,
+    address token
+  ) external returns (uint256 freeCollateral)
+```
+Get the free collateral amount of the specified collateral token of specified trader
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+|`token` | address | The address of the collateral token
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`freeCollateral` | uint256 | amount of that token (in the token's native decimals)
+### getSettlementTokenValue
+```solidity
+  function getSettlementTokenValue(
+    address trader
+  ) external returns (int256)
+```
+Get the specified trader's settlement value, including pending fee, funding payment,
+        owed realized PnL and unrealized PnL
+
+Note the difference between `settlementTokenBalanceX10_S`, `getSettlementTokenValue()` and `getBalance()`:
+     They are all settlement token balances but with or without
+     pending fee, funding payment, owed realized PnL, unrealized PnL, respectively
+     In practical applications, we use `getSettlementTokenValue()` to get the trader's debt (if < 0)
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`balance` | int256 | The balance amount (in settlement token's decimals)
 ### getSettlementToken
 ```solidity
   function getSettlementToken(
   ) external returns (address settlementToken)
 ```
-Get settlement token address
+Get the settlement token address
+
+We assume the settlement token should match the denominator of the price oracle.
+     i.e. if the settlement token is USDC, then the oracle should be priced in USD
+
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`settlementToken` | address | The address of the settlement token
+### isLiquidatable
+```solidity
+  function isLiquidatable(
+    address trader
+  ) external returns (bool)
+```
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`true` | bool | If the trader can be liquidated
+### getMarginRequirementForCollateralLiquidation
+```solidity
+  function getMarginRequirementForCollateralLiquidation(
+    address trader
+  ) external returns (int256)
+```
+get the margin requirement for collateral liquidation of a trader
+
+this value is compared with `ClearingHouse.getAccountValue()` (int)
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`margin` | int256 | requirement (in 18 decimals)
+### getCollateralMmRatio
+```solidity
+  function getCollateralMmRatio(
+  ) external returns (uint24)
+```
+Get the maintenance margin ratio for collateral liquidation
 
 
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`settlementToken` | address | The address of settlement token
+|`collateralMmRatio` | uint24 | The maintenance margin ratio for collateral liquidation
+### getLiquidatableCollateralBySettlement
+```solidity
+  function getLiquidatableCollateralBySettlement(
+    address token,
+    uint256 settlementX10_S
+  ) external returns (uint256 collateral)
+```
+Get a trader's liquidatable collateral amount by a given settlement amount
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`token` | address | The address of the token of the trader's collateral
+|`settlementX10_S` | uint256 | The amount of settlement token the liquidator wants to pay
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`collateral` | uint256 | The collateral amount(in its native decimals) the liquidator can get
+### getRepaidSettlementByCollateral
+```solidity
+  function getRepaidSettlementByCollateral(
+    address token,
+    uint256 collateral
+  ) external returns (uint256 settlementX10_S)
+```
+Get a trader's repaid settlement amount by a given collateral amount
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`token` | address | The address of the token of the trader's collateral
+|`collateral` | uint256 | The amount of collateral token the liquidator wants to get
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`settlementX10_S` | uint256 | The settlement amount(in settlement token's decimals) the liquidator needs to pay
+### getMaxRepaidSettlementAndLiquidatableCollateral
+```solidity
+  function getMaxRepaidSettlementAndLiquidatableCollateral(
+    address trader,
+    address token
+  ) external returns (uint256 maxRepaidSettlementX10_S, uint256 maxLiquidatableCollateral)
+```
+Get a trader's max repaid settlement & max liquidatable collateral by a given collateral token
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+|`token` | address | The address of the token of the trader's collateral
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`maxRepaidSettlementX10_S` | uint256 | The maximum settlement amount(in settlement token's decimals)
+        the liquidator needs to pay to liquidate a trader's collateral token
+|`maxLiquidatableCollateral` | uint256 | The maximum liquidatable collateral amount
+        (in the collateral token's native decimals) of a trader
 ### decimals
 ```solidity
   function decimals(
-  ) external returns (uint8 decimals)
+  ) external returns (uint8)
 ```
 Get settlement token decimals
 
@@ -138,14 +416,14 @@ cached the settlement token's decimal for gas optimization
   function getTotalDebt(
   ) external returns (uint256 debtAmount)
 ```
-Get the debt amount in vault
+Get the borrowed settlement token amount from insurance fund
 
 
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`debtAmount` | uint256 | The debt amount
+|`debtAmount` | uint256 | The debt amount (in settlement token's decimals)
 ### getClearingHouseConfig
 ```solidity
   function getClearingHouseConfig(
@@ -211,6 +489,32 @@ Get `ClearingHouse` contract address
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`clearingHouse` | address | The address of `ClearingHouse` contract
+### getCollateralManager
+```solidity
+  function getCollateralManager(
+  ) external returns (address)
+```
+Get `CollateralManager` contract address
+
+
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`clearingHouse` | address | The address of `CollateralManager` contract
+### getWETH9
+```solidity
+  function getWETH9(
+  ) external returns (address)
+```
+Get `WETH9` contract address
+
+
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`clearingHouse` | address | The address of `WETH9` contract
 
 ## Events
 ### Deposited
@@ -227,9 +531,9 @@ Emitted when trader deposit collateral into vault
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`collateralToken`| address | The address of token that was deposited
+|`collateralToken`| address | The address of token deposited
 |`trader`| address | The address of trader
-|`amount`| uint256 | The amount of token that was deposited
+|`amount`| uint256 | The amount of token deposited
 ### Withdrawn
 ```solidity
   event Withdrawn(
@@ -244,6 +548,85 @@ Emitted when trader withdraw collateral from vault
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`collateralToken`| address | The address of token that was withdrawn
+|`collateralToken`| address | The address of token withdrawn
 |`trader`| address | The address of trader
-|`amount`| uint256 | The amount of token that was withdrawn
+|`amount`| uint256 | The amount of token withdrawn
+### CollateralLiquidated
+```solidity
+  event CollateralLiquidated(
+    address trader,
+    address collateralToken,
+    address liquidator,
+    uint256 collateral,
+    uint256 repaidSettlementWithoutInsuranceFundFeeX10_S,
+    uint256 insuranceFundFeeX10_S,
+    uint24 discountRatio
+  )
+```
+Emitted when a trader's collateral is liquidated
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader`| address | The address of trader
+|`collateralToken`| address | The address of the token that is liquidated
+|`liquidator`| address | The address of liquidator
+|`collateral`| uint256 | The amount of collateral token liquidated
+|`repaidSettlementWithoutInsuranceFundFeeX10_S`| uint256 | The amount of settlement token repaid
+       for trader (in settlement token's decimals)
+|`insuranceFundFeeX10_S`| uint256 | The amount of insurance fund fee paid(in settlement token's decimals)
+|`discountRatio`| uint24 | The discount ratio of liquidation price
+### TrustedForwarderChanged
+```solidity
+  event TrustedForwarderChanged(
+    address trustedForwarder
+  )
+```
+Emitted when trustedForwarder is changed
+
+trustedForwarder is only used for metaTx
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trustedForwarder`| address | The address of trustedForwarder
+### ClearingHouseChanged
+```solidity
+  event ClearingHouseChanged(
+    address clearingHouse
+  )
+```
+Emitted when clearingHouse is changed
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`clearingHouse`| address | The address of clearingHouse
+### CollateralManagerChanged
+```solidity
+  event CollateralManagerChanged(
+    address collateralManager
+  )
+```
+Emitted when collateralManager is changed
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`collateralManager`| address | The address of collateralManager
+### WETH9Changed
+```solidity
+  event WETH9Changed(
+    address WETH9
+  )
+```
+Emitted when WETH9 is changed
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`WETH9`| address | The address of WETH9
