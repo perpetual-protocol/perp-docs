@@ -43,3 +43,25 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # Build output to publish to the `gh-pages` branch:
           publish_dir: ./build
+
+  send-discord-notification:
+    name: Send discord notification
+    if: ${{ always() }}
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Issue success notification
+        if: needs.deploy.result == 'success'
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "**[doc]** https://perpetual-protocol.github.io/lushan-docs/ **Deployed Successfully ✅**."
+
+      - name: Issue failure notification
+        if: needs.deploy.result != 'success'
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "**[doc]** https://perpetual-protocol.github.io/lushan-docs/ **Failed to deploy 🛑**. "
