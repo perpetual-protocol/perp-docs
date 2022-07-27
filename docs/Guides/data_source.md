@@ -88,14 +88,14 @@ We use [AppSync](https://aws.amazon.com/appsync/) as an alternative to The Graph
     	{
     		"url": "https://4b3vdz2hdjho7gzuo4wl2jgsoe.appsync-api.ap-southeast-1.amazonaws.com/graphql",
     		"region": "ap-southeast-1",
-    		"key": "use_the_partner_key"
+    		"key": "xxxxxxxxxx"
     	}
     ],
     "statisticsServerConfigs": [
     	{
     		"url": "https://4b3vdz2hdjho7gzuo4wl2jgsoe.appsync-api.ap-southeast-1.amazonaws.com/graphql",
     		"region": "ap-southeast-1",
-    		"key": "use_the_partner_key"
+    		"key": "xxxxxxxxxx"
     	}
     ]
     ```
