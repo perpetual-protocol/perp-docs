@@ -15,7 +15,6 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
     favicon: "img/favicon.ico",
     organizationName: "perpetual-protocol", // Usually your GitHub org/user name.
     projectName: "lushan-docs", // Usually your repo name.
-
     presets: [
       [
         "@docusaurus/preset-classic",
@@ -104,6 +103,11 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
           theme: lightCodeTheme,
           darkTheme: darkCodeTheme,
           additionalLanguages: ["solidity"],
+        },
+        algolia: {
+          apiKey: '9f3501510e023882845791911e5c113a',
+          indexName: 'perp-docs',
+          appId: '3TBGQBHK03',
         },
       }),
   }
