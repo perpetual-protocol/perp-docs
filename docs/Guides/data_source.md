@@ -17,11 +17,9 @@ We see smart contracts as the default data source. For anything that is retrieva
 - Optimistic Kovan: [https://kovan-optimistic.etherscan.io/](https://kovan-optimistic.etherscan.io/)
 
 ### Usage Examples
-
-<aside>
-💡 Please check out https://github.com/perpetual-protocol/sdk-curie, a Javascript SDK to interface with our v2 smart contracts.
-
-</aside>
+:::note
+Please check out https://github.com/perpetual-protocol/sdk-curie, a Javascript SDK to interface with our v2 smart contracts.
+:::
 
 ---
 
@@ -101,9 +99,7 @@ We use [AppSync](https://aws.amazon.com/appsync/) as an alternative to The Graph
     	}
     ]
     ```
-    
-    [Partner AppSync Access](https://www.notion.so/d869a89478d9445b818f00bef0cb9cfe)
-    
+
 
 ### Usage Examples
 
