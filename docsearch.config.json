@@ -1,0 +1,21 @@
+{
+  "index_name": "perp-docs",
+  "start_urls": ["https://perpetual-protocol.github.io/lushan-docs/"],
+  "sitemap_urls": ["https://perpetual-protocol.github.io/lushan-docs/sitemap.xml"],
+  "sitemap_alternate_links": true,
+  "stop_urls": [],
+  "selectors": {
+    "lvl0": "header h1",
+    "lvl1": "article h1",
+    "lvl2": "article h2",
+    "lvl3": "article h3",
+    "lvl4": "article h4",
+    "lvl5": "article h5, article td:first-child",
+    "lvl6": "article h6",
+    "text": "article p, article li, article td:last-child"
+  },
+  "strip_chars": " .,;:#",
+  "custom_settings": {
+    "separatorsToIndex": "_"
+  }
+}

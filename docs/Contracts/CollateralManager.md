@@ -122,7 +122,7 @@ Same decimals as the settlement token
   function getClearingHouseConfig(
   ) external returns (address)
 ```
-e Get the address of clearing house config
+Get the address of clearing house config
 
 
 
@@ -130,13 +130,12 @@ e Get the address of clearing house config
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`clearingHouseConfig` | address | address of clearing house config
-    funct
 ### getVault
 ```solidity
   function getVault(
   ) external returns (address)
 ```
-e Get the address of vault
+Get the address of vault
 
 
 
@@ -144,14 +143,13 @@ e Get the address of vault
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`vault` | address | address of vault
-    funct
 ### getCollateralConfig
 ```solidity
   function getCollateralConfig(
     address token
   ) external returns (struct Collateral.Config)
 ```
-e Get collateral config by token address
+Get collateral config by token address
 
 
 #### Parameters:
@@ -163,14 +161,13 @@ e Get collateral config by token address
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`collateral` | struct Collateral.Config | config
-    funct
 ### getPriceFeedDecimals
 ```solidity
   function getPriceFeedDecimals(
     address token
   ) external returns (uint8)
 ```
-e Get price feed decimals of the collateral token
+Get price feed decimals of the collateral token
 
 
 #### Parameters:
@@ -182,14 +179,13 @@ e Get price feed decimals of the collateral token
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`decimals` | uint8 | of the price feed
-    funct
 ### getPrice
 ```solidity
   function getPrice(
     address token
   ) external returns (uint256)
 ```
-e Get the price of the collateral token
+Get the price of the collateral token
 
 
 #### Parameters:
@@ -201,7 +197,6 @@ e Get the price of the collateral token
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`price` | uint256 | of the certain period
-    funct
 ### getMaxCollateralTokensPerAccount
 ```solidity
   function getMaxCollateralTokensPerAccount(
@@ -216,7 +211,7 @@ e Get the price of the collateral token
   function getMmRatioBuffer(
   ) external returns (uint24)
 ```
-e Get the minimum `margin ratio - mmRatio` before the account's collateral is liquidatable
+Get the minimum `margin ratio - mmRatio` before the account's collateral is liquidatable
 
 6 decimals, same decimals as _mmRatio
 
@@ -227,7 +222,7 @@ e Get the minimum `margin ratio - mmRatio` before the account's collateral is li
   function getDebtNonSettlementTokenValueRatio(
   ) external returns (uint24)
 ```
-e Get the maximum `debt / nonSettlementTokenValue` before the account's collaterals are liquidated
+Get the maximum `debt / nonSettlementTokenValue` before the account's collaterals are liquidated
 
 6 decimals
 
@@ -238,7 +233,7 @@ e Get the maximum `debt / nonSettlementTokenValue` before the account's collater
   function getLiquidationRatio(
   ) external returns (uint24)
 ```
-e Get the maximum ratio of debt can be repaid in one transaction
+Get the maximum ratio of debt can be repaid in one transaction
 
 6 decimals. For example, `liquidationRatio` = 50% means
      the liquidator can repay as much as half of the trader’s debt in one liquidation
@@ -248,7 +243,6 @@ e Get the maximum ratio of debt can be repaid in one transaction
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`liquidation` | uint24 | ratio
-    functio
 ### getCLInsuranceFundFeeRatio
 ```solidity
   function getCLInsuranceFundFeeRatio(
@@ -264,7 +258,6 @@ Get the insurance fund fee ratio when liquidating a trader's collateral
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`insurance` | uint24 | fund fee ratio
-    functio
 ### getDebtThreshold
 ```solidity
   function getDebtThreshold(
@@ -280,13 +273,12 @@ Get the maximum debt (denominated in settlement token) allowed
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`Debt` | uint256 | threshold
-    function
 ### getCollateralValueDust
 ```solidity
   function getCollateralValueDust(
   ) external returns (uint256)
 ```
-t the threshold of the minium repaid.
+Get the threshold of the minium repaid.
  		If a trader’s collateral value (denominated in settlement token) falls below the threshold,
         the liquidator can convert it with 100% `liquidationRatio` so there is no dust left
 
@@ -297,14 +289,13 @@ t the threshold of the minium repaid.
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`Dust` | uint256 | collateral value
-    function ge
 ### isCollateral
 ```solidity
   function isCollateral(
     address token
   ) public returns (bool)
 ```
-k if the given token is one of collateral tokens
+Check if the given token is one of collateral tokens
 
 
 #### Parameters:
@@ -316,14 +307,13 @@ k if the given token is one of collateral tokens
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`true` | bool | if the token is one of collateral tokens
-    function is
 ### requireValidCollateralMmRatio
 ```solidity
   function requireValidCollateralMmRatio(
     uint24 mmRatioBuffer
   ) public returns (uint24)
 ```
-ire and get the the valid collateral maintenance margin ratio by mmRatioBuffer
+Require and get the the valid collateral maintenance margin ratio by mmRatioBuffer
 
 
 #### Parameters:
@@ -335,5 +325,4 @@ ire and get the the valid collateral maintenance margin ratio by mmRatioBuffer
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`collateralMmRatio` | uint24 | the collateral maintenance margin ratio
-    function re
 
