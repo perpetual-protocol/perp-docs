@@ -13,7 +13,7 @@ jobs:
       - name: Run Scraper
         run: |
           brew install jq
-          docker run -e "APPLICATION_ID=${{ secrets.ALGOLIA_APP_ID }}" -e "API_KEY=${{ secrets.API_KEY }}" -e "CONFIG=$(cat ./docsearch.config.json | jq -r tostring)" algolia/docsearch-scraper
+          docker run -e "APPLICATION_ID=${{ secrets.ALGOLIA_APP_ID }}" -e "API_KEY=${{ secrets.ALGOLIA_API_KEY }}" -e "CONFIG=$(cat ./docsearch.config.json | jq -r tostring)" algolia/docsearch-scraper
 
   send-discord-notification:
     name: Send discord notification
@@ -27,7 +27,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "**[doc]** https://perpetual-protocol.github.io/lushan-docs/ **Update Search Index Successfully ✅**."
+          args: "**[Doc]** https://perpetual-protocol.github.io/lushan-docs/ **Update Search Index Successfully ✅**."
 
       - name: Issue failure notification
         if: needs.build.result != 'success'
@@ -35,4 +35,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "**[doc]** https://perpetual-protocol.github.io/lushan-docs/ **Failed to update Search Index 🛑**. "
+          args: "**[Doc]** https://perpetual-protocol.github.io/lushan-docs/ **Failed to update Search Index 🛑**. "
