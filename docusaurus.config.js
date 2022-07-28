@@ -55,6 +55,12 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
               position: "left",
               label: "Contract",
             },
+            { to: 'docs/Guides/data_source', label: 'Usage Guide', position: 'right' },
+            {
+              href: "https://perpprotocol.mirror.xyz/",
+              label: "Blog",
+              position: "right",
+            },
             {
               href: "https://github.com/perpetual-protocol/lushan-docs",
               label: "GitHub",
