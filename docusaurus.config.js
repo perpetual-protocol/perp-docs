@@ -49,12 +49,8 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
             src: "img/logo.png",
           },
           items: [
-            {
-              type: "doc",
-              docId: "ContractOverview",
-              position: "left",
-              label: "Contract",
-            },
+            { to: 'docs/ContractOverview', label: 'Contracts', position: 'left' },
+            { to: 'docs/Guides/data_source', label: 'SDK', position: 'left' },
             { to: 'docs/Guides/data_source', label: 'Usage Guide', position: 'right' },
             {
               href: "https://perpprotocol.mirror.xyz/",
