@@ -1,3 +1,6 @@
+---
+id: how-to-get-trader-info
+---
 # How to get  every trader’s sub component by taker / maker by market
 
 ## PendingFundingPayment

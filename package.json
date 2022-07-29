@@ -13,8 +13,8 @@
     "typecheck": "tsc",
     "write-heading-ids": "docusaurus write-heading-ids",
     "write-translations": "docusaurus write-translations",
-    "docgen": "npx solidity-docgen --solc-module solc-0.7 -i node_modules/@perp/curie-contract/contracts -o ./contracts -t ./templates && mv ./contracts/*.md ./docs/Contracts && mv ./contracts/interface/*.md ./docs/Interfaces && rm -rf ./contracts",
-    "docgen:local": "npx solidity-docgen --solc-module solc-0.7 -i ../perp-lushan/contracts -o ./contracts -t ./templates && mv ./contracts/*.md ./docs/Contracts && mv ./contracts/interface/*.md ./docs/Interfaces && rm -rf ./contracts"
+    "docgen": "npx solidity-docgen --solc-module solc-0.7 -i node_modules/@perp/curie-contract/contracts -o ./contracts -t ./templates && mv ./contracts/*.md docs/contracts && mv ./contracts/interface/*.md docs/interfaces && rm -rf ./contracts",
+    "docgen:local": "npx solidity-docgen --solc-module solc-0.7 -i ../perp-lushan/contracts -o ./contracts -t ./templates && mv ./contracts/*.md docs/contracts && mv ./contracts/interface/*.md docs/interfaces && rm -rf ./contracts"
   },
   "browserslist": {
     "production": [
