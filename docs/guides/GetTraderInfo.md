@@ -1,11 +1,11 @@
 ---
 id: how-to-get-trader-info
-title: How to get every trader’s sub component by taker / maker by market 
+title: Query Trader Info 
 ---
 
 ## PendingFundingPayment
 
-```jsx
+```typescript
 // the following is the workaround unless we expose Exchange._getFundingGrowthGlobalAndTwaps()
 const lastTraderWhoEmitFundingUpdated
 const fundingGrowthGlobal.fundingGrowthGlobal = AccountBalance.getAccountinfo(lastTraderWhoEmitFundingUpdatedFromThatMarket, baseToken).lastTwPremiumGrowthGlobalX96
@@ -21,9 +21,9 @@ const makerFundingPayment = Exchange.getPendingFundingPayment(trader, baseToken)
 
 - `Exchange.getPendingFundingPayment(trader, baseToken)` is negative if receiving funding payment
 
-## UnrealizedPnl from Taker / Maker by Market
+## Taker or Maker's UnrealizedPnl by Market
 
-```jsx
+```typescript
 const takerPositionSize = AccountBalance.getTakerPositionSize(trader, baseToken)
 const makerImpermanentPositionSize = AccountBalance.getTotalPositionSize(trader, baseToken) - takerPositionSize
 																	 = OrderBook.getTotalTokenAmountInPoolAndPendingFee(trader, baseToken, fetchBaseIsTrue).tokenAmount - OrderBook.getTotalOrderDebt(trader, baseToken, fetchBaseIsTrue)
@@ -49,5 +49,5 @@ const makerUnrealizedPnl = makerImpermanentPositionSize * indexPrice + makerOpen
             - also emit enother one for the liquidator (profit)
     2. PositionChanged + `FundingPaymentSettled` + PositionLiquidated + RealizedMakerFee
         1. PositionChanged.realizedPnl + `FundingPaymentSettled`.fundingPayment + PositionLiquidated.liquidationFee
-2. by return value from contract caller
+2. by contract
     1. every time a contract call (ex. `openPosition` ), store `owedRealizedPnl` before and after the openPosition by calling `AccountBalance.getPnlAndPendingFee`
