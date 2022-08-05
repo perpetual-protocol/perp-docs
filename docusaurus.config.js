@@ -100,7 +100,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
               ],
             },
           ],
-          copyright: `Copyright © ${new Date().getFullYear()} Perpetual protocol docs, Inc. Built with Docusaurus.`,
+          copyright: `Copyright © ${new Date().getFullYear()} Perpetual Protocol docs, Inc. Built with Docusaurus.`,
         },
         prism: {
           theme: lightCodeTheme,
