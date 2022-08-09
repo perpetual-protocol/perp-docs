@@ -100,7 +100,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
               ],
             },
           ],
-          copyright: `Copyright © ${new Date().getFullYear()} Perpetual protocol docs, Inc. Built with Docusaurus.`,
+          copyright: `Copyright © ${new Date().getFullYear()} Perpetual Protocol docs, Inc. Built with Docusaurus.`,
         },
         prism: {
           theme: lightCodeTheme,
@@ -111,6 +111,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
           apiKey: '9f3501510e023882845791911e5c113a',
           indexName: 'perp-docs',
           appId: '3TBGQBHK03',
+          contextualSearch: false,
         },
       }),
   }
