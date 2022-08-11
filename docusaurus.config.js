@@ -5,9 +5,9 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (
   module.exports = {
-    title: "Perpetual protocol",
+    title: "Perpetual Protocol",
     tagline:
-      "On-chain DEX with highly efficient liquidity provisioning and up to 10x leverage for makers and takers.",
+      "On-chain perpetual futures DEX with deep liquidity and builder-ready composability.",
     url: "https://perpetual-protocol.github.io",
     baseUrl: "/lushan-docs/",
     onBrokenLinks: "throw",
@@ -43,9 +43,9 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
       /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
       ({
         navbar: {
-          title: "Perpetual protocol",
+          title: "Perpetual Protocol",
           logo: {
-            alt: "Perpetual protocol Logo",
+            alt: "Perpetual Protocol Logo",
             src: "img/logo.png",
           },
           items: [
