@@ -16,33 +16,32 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Decentralized by Design',
+    title: 'Decentralized and Open Source',
     image: 'https://assets.website-files.com/6074773e5354390d19151475/60c9a51ecb84fd04a2cbf21f_Fully%20Decentralised.svg',
     description: (
       <>
-        Trade instantly using vAMM technology. No sign-ups, no middle man, 
-        no waiting for counterparties & no wondering if your funds are safe.
+        Trade instantly using open source vAMM technology. There are no signups, no intermediaries, and no custodians.
+          You are fully in control of your funds at all times.
       </>
     ),
   },
   {
-    title: 'Best in Class Performance',
+    title: 'High Performant and Secure',
     image: 'https://assets.website-files.com/6074773e5354390d19151475/60c9a51e1a50abd35622a70c_L2%20Transactions.svg',
     description: (
       <>
-        A world class trading experience that is open to all, 
-        thanks to the power of public blockchains and L2 scaling solutions. 
-        Fast transactions with minimal fees.
+        A world class trading experience that is permissionless and secure,
+        thanks to the power of public blockchains and L2 scaling solution Optimism.
+        Enjoy fast transactions and minimal fees with the security of Ethereum's L1.
       </>
     ),
   },
   {
-    title: 'Trade any Asset',
+    title: 'Get Leveraged Exposure to Crypto-assets',
     image: 'https://assets.website-files.com/6074773e5354390d19151475/60c9a51fdfb71b0c55d28736_Trade%20any%20asset.svg',
     description: (
       <>
-        Trading crypto assets is just the beginning. Gold, fiat, 
-        commodities—Perpetual Protocol will support it all.
+          Trade or provide liquidity with up to 10x leverage for a variety of large-cap and long tail crypto assets.
       </>
     ),
   },
