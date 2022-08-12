@@ -31,7 +31,7 @@ export default function Home(): JSX.Element {
     <Layout
       title={`${siteConfig.title}`}
       // Description will go into a meta tag in <head />
-      description="perpetual Protocol docs">
+      description="Perpetual Protocol Documentation">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
