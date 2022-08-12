@@ -4,8 +4,8 @@
   <ShortName>Perpetual Protocol</ShortName>
   <Description>Search Perpetual Protocol</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="16" height="16" type="image/x-icon">https://docs.perp.com/perp-docs/img/favicon.ico</Image>
-  <Url type="text/html" method="get" template="https://docs.perp.com/perp-docs/search?q={searchTerms}"/>
-  <Url type="application/opensearchdescription+xml" rel="self" template="https://docs.perp.com/perp-docs/opensearch.xml" />
-  <moz:SearchForm>https://docs.perp.com/perp-docs/</moz:SearchForm>
+  <Image width="16" height="16" type="image/x-icon">https://docs.perp.com/img/favicon.ico</Image>
+  <Url type="text/html" method="get" template="https://docs.perp.com/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://docs.perp.com/opensearch.xml" />
+  <moz:SearchForm>https://docs.perp.com/</moz:SearchForm>
 </OpenSearchDescription>
