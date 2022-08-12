@@ -56,7 +56,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "**[Doc]** https://perpetual-protocol.github.io/lushan-docs/ **Deployed Successfully ✅**."
+          args: "**[Doc]** https://docs.perp.com **Deployed Successfully ✅**."
 
       - name: Issue failure notification
         if: needs.deploy.result != 'success'
@@ -64,4 +64,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "**[Doc]** https://perpetual-protocol.github.io/lushan-docs/ **Failed to deploy 🛑**. "
+          args: "**[Doc]** https://docs.perp.com **Failed to deploy 🛑**. "
