@@ -8,13 +8,13 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
     title: "Perpetual Protocol",
     tagline:
       "On-chain perpetual futures DEX with deep liquidity and builder-ready composability.",
-    url: "https://perpetual-protocol.github.io",
+    url: "https://docs.perp.com",
     baseUrl: "/",
     onBrokenLinks: "throw",
     onBrokenMarkdownLinks: "warn",
     favicon: "img/favicon.ico",
     organizationName: "perpetual-protocol", // Usually your GitHub org/user name.
-    projectName: "lushan-docs", // Usually your repo name.
+    projectName: "perp-docs", // Usually your repo name.
     presets: [
       [
         "@docusaurus/preset-classic",
@@ -25,7 +25,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
             // Please change this to your repo.
             // TODO: need to update his link after we make this repo public accessible
             editUrl:
-              "https://github.com/perpetual-protocol/lushan-docs/tree/main/",
+              "https://github.com/perpetual-protocol/perp-docs/tree/main/",
           },
           // blog: {
           //   showReadingTime: true,
@@ -60,7 +60,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
             },
             {
               // TODO: need to update his link after we make this repo public accessible
-              href: 'https://github.com/perpetual-protocol/lushan-docs',
+              href: 'https://github.com/perpetual-protocol/perp-docs',
               position: 'right',
               className: 'header-github-link',
               'aria-label': 'GitHub repository',
@@ -98,7 +98,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
                 {
                   label: "GitHub",
                   // TODO: need to update his link after we make this repo public accessible
-                  href: "https://github.com/perpetual-protocol/lushan-docs",
+                  href: "https://github.com/perpetual-protocol/perp-docs",
                 },
               ],
             },
