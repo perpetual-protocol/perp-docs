@@ -1,7 +1,7 @@
 {
   "index_name": "perp-docs",
-  "start_urls": ["https://perpetual-protocol.github.io/lushan-docs/"],
-  "sitemap_urls": ["https://perpetual-protocol.github.io/lushan-docs/sitemap.xml"],
+  "start_urls": ["https://perpetual-protocol.github.io/perp-docs/"],
+  "sitemap_urls": ["https://perpetual-protocol.github.io/perp-docs/sitemap.xml"],
   "sitemap_alternate_links": true,
   "stop_urls": [],
   "selectors": {

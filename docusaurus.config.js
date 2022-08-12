@@ -9,7 +9,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
     tagline:
       "On-chain perpetual futures DEX with deep liquidity and builder-ready composability.",
     url: "https://docs.perp.com",
-    baseUrl: "/",
+    baseUrl: "/perp-docs/",
     onBrokenLinks: "throw",
     onBrokenMarkdownLinks: "warn",
     favicon: "img/favicon.ico",
