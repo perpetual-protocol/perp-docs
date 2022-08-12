@@ -9,7 +9,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
     tagline:
       "On-chain perpetual futures DEX with deep liquidity and builder-ready composability.",
     url: "https://perpetual-protocol.github.io",
-    baseUrl: "/lushan-docs/",
+    baseUrl: "/",
     onBrokenLinks: "throw",
     onBrokenMarkdownLinks: "warn",
     favicon: "img/favicon.ico",
@@ -23,6 +23,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
           docs: {
             sidebarPath: require.resolve("./sidebars.js"),
             // Please change this to your repo.
+            // TODO: need to update his link after we make this repo public accessible
             editUrl:
               "https://github.com/perpetual-protocol/lushan-docs/tree/main/",
           },
@@ -58,6 +59,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
               position: "right",
             },
             {
+              // TODO: need to update his link after we make this repo public accessible
               href: 'https://github.com/perpetual-protocol/lushan-docs',
               position: 'right',
               className: 'header-github-link',
@@ -95,6 +97,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
               items: [
                 {
                   label: "GitHub",
+                  // TODO: need to update his link after we make this repo public accessible
                   href: "https://github.com/perpetual-protocol/lushan-docs",
                 },
               ],
