@@ -26,7 +26,7 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
-    title: 'High Performant and Secure',
+    title: 'Highly Performant and Secure',
     image: 'https://assets.website-files.com/6074773e5354390d19151475/60c9a51e1a50abd35622a70c_L2%20Transactions.svg',
     description: (
       <>
