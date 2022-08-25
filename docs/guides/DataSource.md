@@ -88,7 +88,9 @@ We use [AppSync](https://aws.amazon.com/appsync/) as an alternative to The Graph
 
 ### Exploring Data
 
-- Please contact the team to get the api-key if needed.
+:::note
+Please contact the team to get the api-key if needed.
+:::
     
     ```json
     "candleServerConfigs": [

@@ -53,11 +53,13 @@ const makerUnrealizedPnl = makerImpermanentPositionSize * indexPrice + makerOpen
     1. every time a contract call (ex. `openPosition` ), store `owedRealizedPnl` before and after the openPosition by calling `AccountBalance.getPnlAndPendingFee`
 
 ## Margin Ratio
-1. You can use our `sdk-curie` and call Positions' getAccountMarginRatio function. [Check code snippet](https://github.com/perpetual-protocol/sdk-curie/blob/d3ca551d2801324840f31d4d2472c80f230f5e07/src/core/position/Positions.ts#L219-L230).
+There are 2 ways to do it:
 
-2. Or you can call the contracts and calculate them. The formula will be the same as in our sdk-curie.
+1. Use our npm package [`@perp/sdk-curie`](https://www.npmjs.com/package/@perp/sdk-curie) and call Positions' `getAccountMarginRatio` function. [Check code snippet](https://github.com/perpetual-protocol/sdk-curie/blob/d3ca551d2801324840f31d4d2472c80f230f5e07/src/core/position/Positions.ts#L219-L230).
+
+2. Get data from contracts and calculate them. The formula will be the same as in our [`@perp/sdk-curie`](https://www.npmjs.com/package/@perp/sdk-curie).
 ```typescript
-const accountValue = Vault.getAccountValue(trader)
-const totalAbsPositionValue = AccountBalance.getTotalAbsPositionValue(trader)
+const accountValue = await Vault.getAccountValue(trader)
+const totalAbsPositionValue = await AccountBalance.getTotalAbsPositionValue(trader)
 const marginRatio = accountValue / totalAbsPositionValue
 ```
