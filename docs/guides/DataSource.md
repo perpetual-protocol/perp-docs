@@ -84,9 +84,11 @@ We use [The Graph](https://thegraph.com/) as the default on-chain data indexing 
 
 We use [AppSync](https://aws.amazon.com/appsync/) as an alternative to The Graph for time sensitive data, e.g. price chart series, since The Graph can sometimes be out of sync or unstable. We use as little data from AppSync as possible since AppSync is centralized.
 
+
+
 ### Exploring Data
 
-- Please use the keys provided below to connect
+- Please contact the team to get the api-key if needed.
     
     ```json
     "candleServerConfigs": [
@@ -105,6 +107,12 @@ We use [AppSync](https://aws.amazon.com/appsync/) as an alternative to The Graph
     ]
     ```
 
+    ```bash
+    curl -L -X POST 'https://4b3vdz2hdjho7gzuo4wl2jgsoe.appsync-api.ap-southeast-1.amazonaws.com/graphql' \
+         -H 'x-api-key: xxxxxxxxxx' \
+         -H 'Content-Type: application/json' \
+         -d '{"query":"query MyQuery {\n getStatistics(ammAddr: \"0x8C835DFaA34e2AE61775e80EE29E2c724c6AE2BB\") {\n lastTradePriceUsd\n volume24h\n baseVolume24h\n priceChangeRate24h\n priceHigh24h\n priceLow24h\n }\n}\n","variables":{}}'
+    ```
 
 ### Usage Examples
 
