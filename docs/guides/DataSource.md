@@ -62,20 +62,19 @@ We use [The Graph](https://thegraph.com/) as the default on-chain data indexing 
 
 - Market Detail / Funding Rate (8h)
     
-
-![](./images/funding_rate.png)
+    ![](./images/funding_rate.png)
     
 - Market Detail / Trades
     
-![](./images/market_trades.png)
+    ![](./images/market_trades.png)
     
 - Market Detail / Fills
     
-![](./images/market_filled.png)
+    ![](./images/market_filled.png)
     
 - History (all tabs)
     
-![](./images/history.png)
+    ![](./images/history.png)
     
 
 ---
@@ -91,29 +90,186 @@ We use [AppSync](https://aws.amazon.com/appsync/) as an alternative to The Graph
 :::note
 Please contact the team to get the api-key if needed.
 :::
-    
+
+- Service Configs
+
     ```json
     "candleServerConfigs": [
-    	{
-    		"url": "https://4b3vdz2hdjho7gzuo4wl2jgsoe.appsync-api.ap-southeast-1.amazonaws.com/graphql",
-    		"region": "ap-southeast-1",
-    		"key": "xxxxxxxxxx"
-    	}
+        {
+            "url": "https://4b3vdz2hdjho7gzuo4wl2jgsoe.appsync-api.ap-southeast-1.amazonaws.com/graphql",
+            "region": "ap-southeast-1",
+            "key": "xxxxxxxxxx"
+        }
     ],
     "statisticsServerConfigs": [
-    	{
-    		"url": "https://4b3vdz2hdjho7gzuo4wl2jgsoe.appsync-api.ap-southeast-1.amazonaws.com/graphql",
-    		"region": "ap-southeast-1",
-    		"key": "xxxxxxxxxx"
-    	}
+        {
+            "url": "https://4b3vdz2hdjho7gzuo4wl2jgsoe.appsync-api.ap-southeast-1.amazonaws.com/graphql",
+            "region": "ap-southeast-1",
+            "key": "xxxxxxxxxx"
+        }
     ]
     ```
+
+- Example
 
     ```bash
     curl -L -X POST 'https://4b3vdz2hdjho7gzuo4wl2jgsoe.appsync-api.ap-southeast-1.amazonaws.com/graphql' \
          -H 'x-api-key: xxxxxxxxxx' \
          -H 'Content-Type: application/json' \
          -d '{"query":"query MyQuery {\n getStatistics(ammAddr: \"0x8C835DFaA34e2AE61775e80EE29E2c724c6AE2BB\") {\n lastTradePriceUsd\n volume24h\n baseVolume24h\n priceChangeRate24h\n priceHigh24h\n priceLow24h\n }\n}\n","variables":{}}'
+    ```
+    
+- Candle Service Schema
+    
+    ```graphql
+    #
+    # Models
+    #
+    
+    type CandleStick {
+        market: String!,
+        resolution: String!,
+        startTime: Int!,
+        open: String!,
+        high: String!,
+        low: String!,
+        close: String!,
+        volume: String!,
+        baseAssetVol: String!,
+        txCount: Int!
+        version: Int!
+        blockNumber: Int!
+    }
+    
+    #
+    # Operations
+    #
+    
+    type Query {
+        listCandleSticks(
+            query: TableCandleStickQueryInput!, 
+            limit: Int, 
+            nextToken: String
+        ): CandleStickConnection
+    }
+    
+    type Subscription {
+        onUpsertCandleStick(
+            market: String,
+            resolution: String,
+            startTime: String
+        ): CandleStick
+    
+    		onDeleteCandleStick(
+            market: String,
+            resolution: String,
+            startTime: String
+        ): CandleStick
+    }
+    
+    #
+    # Operation Models
+    #
+    
+    type CandleStickConnection {
+        items: [CandleStick]
+    		
+    		# token to get next page data if any
+        nextToken: String
+    }
+    
+    input TableCandleStickQueryInput {
+    		# format: baseToken#resolution
+        # ex: 0x7EAdA83e15AcD08d22ad85A1dCE92E5A257Acb92#5m
+        marketResolution: TableStringFilterInput
+        startTime: TableIntFilterInput
+    }
+    
+    input TableStringFilterInput {
+        ne: String
+        eq: String
+        le: String
+        lt: String
+        ge: String
+        gt: String
+        contains: String
+        notContains: String
+        between: [String]
+        beginsWith: String
+    }
+    
+    input TableIntFilterInput {
+        ne: Int
+        eq: Int
+        le: Int
+        lt: Int
+        ge: Int
+        gt: Int
+        contains: Int
+        notContains: Int
+        between: [Int]
+    }
+    ```
+    
+- Statistics Service Schema
+    
+    ```graphql
+    #
+    # Models
+    #
+    
+    type Statistics {
+        ammAddr: String! # ammAddr is used in place of baseToken in perp v2
+        lastTradePriceUsd: String
+        volume24h: String
+        baseVolume24h: String
+        priceChangeRate24h: String
+        priceHigh24h: String
+        priceLow24h: String
+        timestamp: Int!
+        blockNumber: Int!
+    }
+    
+    #
+    # Operations
+    #
+    
+    type Query {
+        getStatistics(ammAddr: String!): Statistics
+    }
+    
+    type Subscription {
+        onUpsertStatistics(ammAddr: String): Statistics
+    }
+    
+    #
+    # Operation Models
+    #
+    
+    input TableStringFilterInput {
+        ne: String
+        eq: String
+        le: String
+        lt: String
+        ge: String
+        gt: String
+        contains: String
+        notContains: String
+        between: [String]
+        beginsWith: String
+    }
+    
+    input TableIntFilterInput {
+        ne: Int
+        eq: Int
+        le: Int
+        lt: Int
+        ge: Int
+        gt: Int
+        contains: Int
+        notContains: Int
+        between: [Int]
+    }
     ```
 
 ### Usage Examples
@@ -127,13 +283,13 @@ Please contact the team to get the api-key if needed.
     - Gas Rebate
     - Liquidity Mining
     
-![](./images/reward.png)
+    ![](./images/reward.png)
     
 - Pool APR
     
-![](./images/pool_apr.png)
+    ![](./images/pool_apr.png)
 
-![](./images/pool_net_return.png)
+    ![](./images/pool_net_return.png)
     
 
 ---
@@ -159,4 +315,4 @@ Please contact the team to get the api-key if needed.
     
 - Liquidity Pool
     
-![](./images/liquidity_pool.jpeg)
+    ![](./images/liquidity_pool.jpeg)
