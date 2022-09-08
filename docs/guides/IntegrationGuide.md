@@ -4,21 +4,18 @@ title: Perp v2 Integration Guide
 sidebar_position: 1
 ---
 
-:::note
-💡 most of the API details will be merged to NatSpec doc
-:::
+## Which contracts should I be interacting with?
 
-## Which contracts should I interact with?
+There are three main contracts:
+1. `Vault`: where all users' funds are stored, including USDC and non-USDC collaterals
+2. `ClearingHouse`:
+	- the main component that manages all markets of Perp v2
+    - As a taker, one can open or close positions
+    - As a maker, one can add or remove liquidity 
+    - As a liquidator, one can liquidate someone's position that is close to or already bankrupt and get liquidation fees as the reward
+3. `AccountBalance`: where most of the information of a trader can be queried, such as position size, position value, etc
 
-There are two main contracts users might interact with:
-
-1. `Vault`: Store all users' collateral. We will support multi-asset as collateral. But for now, only USDC is supported
-2. `ClearingHouse` : Clearing house is the main component in perp v2. 
-    - It manages all trading markets in perp v2.
-    - For a trader, he/she can open/close positions or open/cancel open orders (range orders, a feature of Uniswap V3).
-    - For a maker, he/she can add or remove liquidity to/from a market.
-    - As a liquidator, he/she can close someone's position that is under-collateralized and get liquidation fees from it.
-3. `AccountBalance`:  where most balances of a trader are recorded, such as margin ratio, position size, position value, etc. This contract is pretty much filled with view functions, so the comments (or Natspec, if there is) in the contract code should be sufficient.
+---
 
 ### Install Curie npm package
 
@@ -26,22 +23,15 @@ There are two main contracts users might interact with:
 npm install @perp/curie-contract 
 ```
 
-Be sure to use Node 12. (Using Node 16 if your CPU is m1)
+Node version: 12 (or 16 for M1 CPU)
 
 ---
 
 ## Vault
 
-Vault contract is mainly used for depositing and withdrawing.
-
-### Check which tokens are supported in Vault as collateral
-
-For now, only USDC is supported.
+This contract is mainly used for depositing and withdrawing collaterals.
 
 ### Deposit
-
-When depositing, only USDC is supported as collateral for now. We are working on supporting multi-assets in the near future.
-
 #### `Vault.deposit`
 
 Deposit collateral
@@ -50,78 +40,67 @@ Deposit collateral
 function deposit(address token, uint256 amount) external;
 ```
 
-Parameter:
+Parameters:
+- `token`: the address of the collateral
+- `amount`: the amount to be deposited
 
-- `token`: the token address of USDC(only USDC for now)
-- `amount`: the amount you want to deposit
-
-Code sample(in solidity):
-
+Example:
 ```tsx
 IVault(VAULT_ADDR).deposit(TOKEN_ADDR, AMOUNT)
 ```
 
 ### Withdraw
 
-When withdrawing collaterals, one can withdraw the amount up to your `freeCollateral`. This makes sure that positions are always sufficiently collateralized.
+When withdrawing collaterals, one can withdraw the amount up to one's `freeCollateral`. This ensures that one's positions are always sufficiently collateralized.
 
 #### `Vault.getFreeCollateral`
 
-Check how much collateral a trader can withdraw
+How many collaterals a trader can withdraw
 
 ```tsx
 function getFreeCollateral(address trader) external view returns (uint256);
 ```
 
 Parameter:
-
 - `trader`: the address of the trader
 
 ---
 
 #### `Vault.withdraw`
 
-Withdraw the collateral token with the specified amount
+Withdraw collaterals of the specified amount
 
 ```tsx
 function withdraw(address token, uint256 amount) external;
 ```
 
-Parameter:
+Parameters:
+- `token`: the address of the collateral
+- `amount`: the amount to be withdrawn, which should not exceed `freeCollateral`
 
-- `token`: the collateral token address, same as `deposit` function
-- `amount`: the amount you want to withdraw, which should not exceed `freeCollateral`
-
-Code sample:
-
+Example:
 ```tsx
 IVault vault = IVault(VAULT_ADDR);
-uint256 freeCollateral = vault.getFreeCollateral(address(this));
-vault.withdraw(freeCollateral);
+
+uint256 freeCollateral = vault.getFreeCollateral(TRADER_ADDR);
+
+vault.withdraw(TOKEN_ADDR, AMOUNT);
 ```
 
 ---
 
 ## ClearingHouse
 
-Takers, makers, and liquidators all need to interact with ClearingHouse.
+ClearingHouse manages all markets of Perp v2.
 
-- For Takers: open/close position, open/cancel open order(a special case of adding/removing liquidity).
-- For makers: add/remove liquidity to/from a market
-- For liquidators: close trader's positions that don't meet the margin requirement
-
-Clearing House manages all the markets in Perp v2. All the markets in Perp v2 have virtual token pairs on Uniswap V3. These virtual tokens are created by us and can be transferred between ClearingHouse and Uniswap V3 pools only. 
-
-Two concepts you need to know before using perp v2:
-
-- Base token: the virtual underlying asset that you are trading with, usually this can be vETH/vBTC/vDOT, etc.
-- Quote token: virtual quote token, which is vUSDC for all pairs.
+For each market, we deploy a pair of two virtual tokens (with no real value) and initiate a new Uniswap V3 pool to provide liquidity to.
+- Base token: the virtual underlying asset users are trading for, such as vETH, vBTC
+- Quote token: the counter currency of base token, which is always vUSDC for any base token
 
 ### Open Position
-
 #### `ClearingHouse.openPosition`
 
-Opening or adjust (increase or reduce) a position. 
+Open a new position or adjust the position size of an existing one
 
 ```tsx
 struct OpenPositionParams {
@@ -129,19 +108,19 @@ struct OpenPositionParams {
     bool isBaseToQuote;
     bool isExactInput;
     uint256 amount;
-		uint256 oppositeAmountBound;
+	uint256 oppositeAmountBound;
     uint256 deadline;
-    uint160 sqrtPriceLimitX96; // price slippage protection
-		bytes32 referralCode;
+    uint160 sqrtPriceLimitX96;
+	bytes32 referralCode;
 }
 
-function openPosition(OpenPositionParams memory params) external returns (uint256 deltaBase, uint256 deltaQuote);
+function openPosition(OpenPositionParams memory params) external returns (uint256 base, uint256 quote);
 ```
 
-Parameter:
+Parameters:
 
-- `baseToken`: the address of the base token; specifies which market you want to trade in
-- `isBaseToQuote`: `true` for shorting the base token asset, `false` for longing the base token asset
+- `baseToken`: the address of the base token, which suggests the market to trade in
+- `isBaseToQuote`: `true` for shorting the base token asset and `false` for longing
 - `isExactInput`: for specifying `exactInput` or `exactOutput` ; similar to UniSwap V2's specs
 - `amount`: the amount specified. Depending on the `isExactInput` parameter, this can be either the input amount or output amount.
 - `oppositeAmountBound`: the restriction on how many token to receive/pay, depending on `isBaseToQuote` & `isExactInput`
@@ -149,16 +128,15 @@ Parameter:
     - `isBaseToQuote` && `!isExactInput`: want less input base as possible, so we set a upper bound of input base
     - `!isBaseToQuote` && `isExactInput`: want more output base as possible, so we set a lower bound of output base
     - `!isBaseToQuote` && `!isExactInput`: want less input quote as possible, so we set a upper bound of input quote
-- `deadline`: the restriction on when this tx should be executed; otherwise, it fails
-- `sqrtPriceLimitX96`: the restriction on the ending price after the swap. `0` for no limit. This is the same as `sqrtPriceLimitX96` in the UniSwap V3 contract.
+- `deadline`: the restriction on when the tx should be executed; otherwise, tx will get reverted
+- `sqrtPriceLimitX96`: the restriction on the ending price after the swap; `0` for no limit. This is the same as `sqrtPriceLimitX96` in the UniSwap V3 contract.
 - `referralCode`: the referral code for partners
 
-Returns:
+Return values:
+- `base`: the amount of base token exchanged
+- `quote`: the amount of quote token exchanged
 
-- `deltaBase`: the amount of base token exchanged
-- `deltaQuote`: the amount of quote token exchanged
-
-**Code sample:**
+**Example:**
 
 - Long 1 vETH
 
@@ -168,42 +146,41 @@ ClearingHouse clearingHouse = ClearingHouse(CH_ADDR);
 IClearingHouse.OpenPositionParams params = IClearingHouse.OpenPositionParams({
 	baseToken: VETH_ADDR,
 	isBaseToQuote: false, // false for longing
-	isExactInput: false,
+	isExactInput: false, // false for specifying the output vETH amount
 	amount: 1 ether,
-	oppositeAmountBound: 0, // 0 for no amount limit
-	sqrtPriceLimitX96: 0 // 0 for no price limit
-	deadline: block.timestamp + 900, // 15 minutes for example
-	referralCode: 0x0000000000000000000000000000000000000000000000000000000000000000 // zero for example
+	oppositeAmountBound: 0, // no amount limit
+	sqrtPriceLimitX96: 0 // no price limit
+	deadline: block.timestamp + 900, // take 15 minutes for example
+	referralCode: 0x0000000000000000000000000000000000000000000000000000000000000000 // no referral code
 })
 
-// quote is the amount of quote token taker pays
-// base is the amount of base token taker gets
+// quote is the amount of quote token the taker pays
+// base is the amount of base token the taker gets
 (uint256 base, uint256 quote) = clearingHouse.openPosition(params)
 ```
 
 ### Close Position
 
-Close a position.
+Close an existing position
 
 #### `ClearingHouse.closePosition`
 
 ```jsx
 struct ClosePositionParams {
-		address baseToken;
-		uint160 sqrtPriceLimitX96;
-		uint256 oppositeAmountBound;
-		uint256 deadline;
-		bytes32 referralCode;
+	address baseToken;
+	uint160 sqrtPriceLimitX96;
+	uint256 oppositeAmountBound;
+	uint256 deadline;
+	bytes32 referralCode;
 }
 
-function closePosition(ClosePositionParams calldata params) external returns (uint256 deltaBase, uint256 deltaQuote);
+function closePosition(ClosePositionParams calldata params) external returns (uint256 base, uint256 quote);
 ```
+The params are pretty much the same as `openPosition`.
 
-Params are pretty much the same as `openPosition`.
+**Example:**
 
-**Code sample:**
-
-- Close the 1 vETH long position in the example of `openPosition`
+- Close the 1 vETH long position in the above example of `openPosition`
 
 ```tsx
 ClearingHouse clearingHouse = ClearingHouse(CH_ADDR);
@@ -220,27 +197,33 @@ IClearingHouse.ClosePositionParams params = IClearingHouse.ClosePositionParams({
 ```
 
 ### Add Liquidity
-
 #### `ClearingHouse.addLiquidity`
 
-Provide liquidity to a market.
+Provide liquidity
 
 ```tsx
 struct AddLiquidityParams {
-        address baseToken;
-        uint256 base;
-        uint256 quote;
-        int24 lowerTick;
-        int24 upperTick;
-        uint256 minBase;
-        uint256 minQuote;
-        uint256 deadline;
+	address baseToken;
+    uint256 base;
+    uint256 quote;
+    int24 lowerTick;
+    int24 upperTick;
+    uint256 minBase;
+    uint256 minQuote;
+    uint256 deadline;
+}
+
+struct AddLiquidityResponse {
+    uint256 base;
+    uint256 quote;
+    uint256 fee;
+    uint256 liquidity;
 }
 
 function addLiquidity(AddLiquidityParams calldata params) external returns (AddLiquidityResponse memory)
 ```
 
-Parameter:
+Parameters:
 
 - `baseToken`: the base token address
 - `base`: the amount of base token you want to provide
@@ -251,16 +234,17 @@ Parameter:
 - `minQuote`: the minimum amount of quote token you'd like to provide
 - `deadline`: a time after which the transaction can no longer be executed
 
-Returns:
+Return values:
 
 - `base`: the amount of base token added to the pool
 - `quote`: the amount of quote token added to the pool
-- `fee`: the amount of fee collected, if there is any
+- `fee`: the amount of fee collected if there is any
 - `liquidity`: the amount of liquidity added to the pool, derived from `base` & `quote`
 
-**Code sample:**
+**Example:**
 
-- Provide liquidity to vETH/vUSDC pair with 2 vETH and 100 vUSDC, in the range [50000, 51000)
+- Provide liquidity to vETH/vUSDC pair with 2 vETH and 100 vUSDC, in the **tick** range [50000, 51000)
+	- The range for liquidity on Perp V2 and Uniswap V3 is always expressed in tick
 
 ```tsx
 ClearingHouse clearingHouse = ClearingHouse(CH_ADDR);
@@ -280,24 +264,29 @@ IClearingHouse.AddLiquidityResponse memory response = clearingHouse.addLiquidity
 ```
 
 ### Remove Liquidity
-
 #### `ClearingHouse.removeLiquidity`
 
 ```tsx
 struct RemoveLiquidityParams {
-        address baseToken;
-        int24 lowerTick;
-        int24 upperTick;
-        uint128 liquidity;
-        uint256 minBase;
-        uint256 minQuote;
-        uint256 deadline;
+    address baseToken;
+    int24 lowerTick;
+    int24 upperTick;
+    uint128 liquidity;
+	uint256 minBase;
+    uint256 minQuote;
+	uint256 deadline;
+}
+
+struct RemoveLiquidityResponse {
+    uint256 base;
+    uint256 quote;
+    uint256 fee;
 }
 
 function removeLiquidity(RemoveLiquidityParams calldata params) external returns (RemoveLiquidityResponse memory)
 ```
 
-Parameter:
+Parameters:
 
 - `baseToken`: the address of base token
 - `lowerTick`: lower tick of liquidity range, same as UniSwap V3
@@ -307,15 +296,15 @@ Parameter:
 - `minQuote`: the minimum amount of quote token you want to remove
 - `deadline`: a time after which the transaction can no longer be executed
 
-Returns:
+Return values:
 
 - `base`: the amount of base token removed from pool
 - `quote`: the amount of quote token removed from pool
-- `fee`: the amount of fee collected, if there is any
+- `fee`: the amount of fee collected if there is any
 
-**Code sample:**
+**Example:**
 
-- Decrease 12 liquidity from vETH/vUSDC pair, in the range [50000, 51000), with minimum of 1 ETH
+- Remove 12 units of liquidity from vETH/vUSDC pair, in the tick range [50000, 51000) with a minimum requirement of 1 ETH that should be successfully removed
 
 ```tsx
 ClearingHouse clearingHouse = ClearingHouse(CH_ADDR);
@@ -333,7 +322,7 @@ IClearingHouse.RemoveLiquidityParams params = ClearingHouse.RemoveLiquidityParam
 RemoveLiquidityResponse memory response = clearingHouse.removeLiquidity(params);
 ```
 
-Collect maker's fees by **removing zero liquidity**
+- Collect maker's fees by **removing zero liquidity**
 
 ```tsx
 ClearingHouse clearingHouse = ClearingHouse(CH_ADDR);
@@ -342,26 +331,24 @@ IClearingHouse.RemoveLiquidityParams params = ClearingHouse.RemoveLiquidityParam
 	baseToken: VETH_ADDR,
 	lowerTick: 50000,
 	upperTick: 51000,
-	liquidity: 0, // zero means only collect the accumulated swap fees since last collect
+	liquidity: 0, // removing 0 liquidity is interpreted as to collect the accumulated swapping fees since last collection
 	minBase: 0,
 	minQuote: 0,
 	deadline: block.timestamp
 })
 
-// response.fee is the fee the maker gets
+// response.fee is the fees a maker gets
 RemoveLiquidityResponse memory response = clearingHouse.addLiquidity(params)
 ```
 
 ### Get Account Value
-
 #### `ClearingHouse.getAccountValue`
 
-Get how much your positions are worth. Denominated in USDC.
+Get the total worth of one's positions denominated in USDC
 
 ```tsx
 function getAccountValue(address trader) public view returns (int256);
 ```
 
 Parameter:
-
 - `account`: the address of the trader
