@@ -17,7 +17,7 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: 'Decentralized and Open Source',
-    image: 'https://assets.website-files.com/6074773e5354390d19151475/60c9a51ecb84fd04a2cbf21f_Fully%20Decentralised.svg',
+    image: require('@site/static/img/feature-decentralized.jpg').default,
     description: (
       <>
         Trade instantly using open source vAMM technology. There are no signups, no intermediaries, and no custodians.
@@ -27,7 +27,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Highly Performant and Secure',
-    image: 'https://assets.website-files.com/6074773e5354390d19151475/60c9a51e1a50abd35622a70c_L2%20Transactions.svg',
+    image: require('@site/static/img/feature-performant.jpg').default,
     description: (
       <>
         A world class trading experience that is permissionless and secure,
@@ -38,7 +38,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Get Leveraged Exposure to Crypto-assets',
-    image: 'https://assets.website-files.com/6074773e5354390d19151475/60c9a51fdfb71b0c55d28736_Trade%20any%20asset.svg',
+    image: require('@site/static/img/feature-leverage.jpg').default,
     description: (
       <>
           Trade or provide liquidity with up to 10x leverage for a variety of large-cap and long tail crypto assets.
