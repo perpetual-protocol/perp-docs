@@ -15,9 +15,9 @@ function HomepageHeader() {
         <p className={styles.heroSubtitle}>{siteConfig.tagline}</p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
+            className="button button--primary button--lg"
             to="/docs/contract-overview">
-            Smart contract overview
+            Smart Contract Overview
           </Link>
         </div>
       </div>
