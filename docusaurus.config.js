@@ -48,8 +48,6 @@ module.exports = {
         },
         items: [
           { to: "docs/contract-overview", label: "Contracts", position: "left" },
-          // NOTE: uncomment this when sdk doc is ready
-          // { to: 'docs/guides/data-source', label: 'SDK', position: 'left' },
           { to: "docs/guides/data-source", label: "Usage Guide", position: "right" },
           {
             href: "https://perpprotocol.mirror.xyz/",
@@ -57,7 +55,6 @@ module.exports = {
             position: "right",
           },
           {
-            // TODO: need to update his link after we make this repo public accessible
             href: "https://github.com/perpetual-protocol/perp-docs",
             position: "right",
             className: "header-github-link",
