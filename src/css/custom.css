@@ -4,8 +4,15 @@
  * work well for content-centric websites.
  */
 
+@font-face {
+  font-family: "Inter";
+  src: url('/font/Inter-Regular.otf') format('opentype');
+}
+
 /* You can override the default Infima variables here. */
 :root {
+  --ifm-font-family-monospace: "Inter";
+  --ifm-font-family-base: "Inter";
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: rgb(33, 175, 144);
   --ifm-color-primary-darker: rgb(31, 165, 136);
