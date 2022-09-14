@@ -14,25 +14,3 @@ jobs:
         run: |
           brew install jq
           docker run -e "APPLICATION_ID=${{ secrets.ALGOLIA_APP_ID }}" -e "API_KEY=${{ secrets.ALGOLIA_API_KEY }}" -e "CONFIG=$(cat ./docsearch.config.json | jq -r tostring)" algolia/docsearch-scraper
-
-  send-discord-notification:
-    name: Send discord notification
-    if: ${{ always() }}
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Issue success notification
-        if: needs.build.result == 'success'
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
-        uses: Ilshidur/action-discord@master
-        with:
-          args: "**[Doc]** https://docs.perp.com **Update Search Index Successfully ✅**."
-
-      - name: Issue failure notification
-        if: needs.build.result != 'success'
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
-        uses: Ilshidur/action-discord@master
-        with:
-          args: "**[Doc]** https://docs.perp.com **Failed to update Search Index 🛑**. "
