@@ -4,20 +4,45 @@
  */
 
 .heroBanner {
-  padding: 4rem 0;
+  padding: 2rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
-}
-
-@media screen and (max-width: 966px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+  background-image: url("/img/banner-mobile.jpg");
+  background-size: contain;
 }
 
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+[data-theme='dark'] .heroTitle {
+  color: white;
+}
+
+[data-theme='dark'] .heroSubtitle {
+  color: white;
+}
+
+@media screen and (min-width: 768px) {
+  .heroBanner {
+    background-image: url("/img/banner-tablet.jpg");
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .heroBanner {
+    background-image: url("/img/banner-desktop.jpg");
+    background-size: cover;
+    padding: 4rem 0;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .heroBanner {
+    background-size: contain;
+    background-repeat: repeat-x;
+  }
 }
