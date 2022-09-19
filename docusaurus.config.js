@@ -73,10 +73,10 @@ module.exports = {
                 to: "https://app.perp.com",
               },
               {
-                label: "Tokenomics",
+                label: "Token",
                 to: "https://token.perp.com",
               },
-              { label: "Vaults", to: "https://perp.com/featured-partners" },
+              { label: "Third-party Vaults", to: "https://perp.com/featured-partners" },
               // NOTE: these 2 links are broken. Wait for update from marketing team
               // { label: "Leaderboard", to: "https://perpetual.io/leaderboard" },
               // { label: "Analytics", to: "https://perpetual.io/analytics" },
@@ -115,7 +115,7 @@ module.exports = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Perpetual Protocol docs, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Perpetual Protocol. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
