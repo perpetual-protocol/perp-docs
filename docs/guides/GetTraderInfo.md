@@ -26,11 +26,9 @@ const makerFundingPayment = Exchange.getPendingFundingPayment(trader, baseToken)
 ```typescript
 const takerPositionSize = AccountBalance.getTakerPositionSize(trader, baseToken)
 const makerImpermanentPositionSize = AccountBalance.getTotalPositionSize(trader, baseToken) - takerPositionSize
-																	 = OrderBook.getTotalTokenAmountInPoolAndPendingFee(trader, baseToken, fetchBaseIsTrue).tokenAmount - OrderBook.getTotalOrderDebt(trader, baseToken, fetchBaseIsTrue)
 
 const takerOpenNotional = AccountBalance.getTakerOpenNotional(trader, baseToken) 
 const makerOpenNotional = AccountBalance.getTotalOpenNotional(trader, baseToken) - takerOpenNotional
-												= OrderBook.getTotalTokenAmountInPoolAndPendingFee(trader, baseToken, fetchBaseIsFalse).tokenAmount - OrderBook.getTotalOrderDebt(trader, baseToken, fetchBaseIsFalse)
 
 const takerUnrealizedPnl = takerPositionSize * indexPrice + takerOpenNotional
 const makerUnrealizedPnl = makerImpermanentPositionSize * indexPrice + makerOpenNotional
