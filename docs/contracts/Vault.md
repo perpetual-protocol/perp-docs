@@ -343,11 +343,16 @@ Get the balance of Vault of the specified collateral token and trader
 ### getCollateralTokens
 ```solidity
   function getCollateralTokens(
+    address trader
   ) external returns (address[])
 ```
-Get they array of collateral token addresses that a trader has
+Get the array of collateral token addresses that a trader has in their account
 
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
