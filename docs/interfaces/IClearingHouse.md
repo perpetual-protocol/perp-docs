@@ -183,6 +183,27 @@ Trader can call `openPosition` to long/short on baseToken market
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`base` | uint256 | The amount of baseToken the taker got or spent
 |`quote` | uint256 | The amount of quoteToken the taker got or spent
+### openPositionFor
+```solidity
+  function openPositionFor(
+    address trader,
+    struct IClearingHouse.OpenPositionParams params
+  ) external returns (uint256 base, uint256 quote, uint256 fee)
+```
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`params` | struct IClearingHouse.OpenPositionParams | OpenPositionParams struct is the same as `openPosition()`
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`base` | uint256 | The amount of baseToken the taker got or spent
+|`quote` | uint256 | The amount of quoteToken the taker got or spent
+|`fee` | uint256 | The trading fee
 ### closePosition
 ```solidity
   function closePosition(
@@ -207,26 +228,25 @@ Close trader's position
   function liquidate(
     address trader,
     address baseToken,
-    uint256 oppositeAmountBound
-  ) external returns (uint256 base, uint256 quote, bool isPartialClose)
+    int256 positionSize
+  ) external
 ```
 If trader is underwater, any one can call `liquidate` to liquidate this trader
 
 If trader has open orders, need to call `cancelAllExcessOrders` first
+If positionSize is greater than maxLiquidatePositionSize, liquidate maxLiquidatePositionSize by default
+If margin ratio >= 0.5 * mmRatio,
+        maxLiquidateRatio = MIN((1, 0.5 * totalAbsPositionValue / absPositionValue)
+If margin ratio < 0.5 * mmRatio, maxLiquidateRatio = 1
+maxLiquidatePositionSize = positionSize * maxLiquidateRatio
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`trader` | address | The address of trader
 |`baseToken` | address | The address of baseToken
-|`oppositeAmountBound` | uint256 | please check OpenPositionParams
+|`positionSize` | int256 | the position size to be liquidated by liquidator
 
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`base` | uint256 | The amount of baseToken the taker got or spent
-|`quote` | uint256 | The amount of quoteToken the taker got or spent
-|`isPartialClose` | bool | when it's over price limit return true and only liquidate 25% of the position
 ### liquidate
 ```solidity
   function liquidate(
@@ -234,10 +254,12 @@ If trader has open orders, need to call `cancelAllExcessOrders` first
     address baseToken
   ) external
 ```
-If trader is underwater, any one can call `liquidate` to liquidate this trader
+liquidate trader's position and will liquidate the max possible position size
 
-This function will be deprecated in the future, recommend to use the function `liquidate()` above
-If trader has open orders, need to call `cancelAllExcessOrders` first
+If margin ratio >= 0.5 * mmRatio,
+        maxLiquidateRatio = MIN((1, 0.5 * totalAbsPositionValue / absPositionValue)
+If margin ratio < 0.5 * mmRatio, maxLiquidateRatio = 1
+maxLiquidatePositionSize = positionSize * maxLiquidateRatio
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
@@ -288,7 +310,7 @@ This function won't fail if the maker has no order but fails when maker is not u
     address baseToken
   ) external returns (uint256 base, uint256 quote)
 ```
-Close all positions of a trader in the closed market
+Close all positions and remove all liquidities of a trader in the closed market
 
 
 #### Parameters:
@@ -425,6 +447,19 @@ Get `InsuranceFund` address
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`insuranceFund` | address | `InsuranceFund` address
+### getDelegateApproval
+```solidity
+  function getDelegateApproval(
+  ) external returns (address delegateApproval)
+```
+Get `DelegateApproval` address
+
+
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`delegateApproval` | address | `DelegateApproval` address
 
 ## Events
 ### ReferredPositionChanged
@@ -575,3 +610,16 @@ TrustedForward is only used for metaTx
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`forwarder`| address | The trusted forwarder address
+### DelegateApprovalChanged
+```solidity
+  event DelegateApprovalChanged(
+    address delegateApproval
+  )
+```
+Emitted when DelegateApproval address changed
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`delegateApproval`| address | The address of DelegateApproval

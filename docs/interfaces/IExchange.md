@@ -128,6 +128,24 @@ Get all the pending funding payment for a trader
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`pendingFundingPayment` | int256 | The pending funding payment of the trader.
 Positive value means the trader pays funding, negative value means the trader receives funding.
+### isOverPriceSpread
+```solidity
+  function isOverPriceSpread(
+    address baseToken
+  ) external returns (bool)
+```
+Check if current price spread between market price and index twap is over maximum price spread.
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`baseToken` | address | Address of the base token
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`true` | bool | if over the maximum price spread
 ### getPendingFundingPayment
 ```solidity
   function getPendingFundingPayment(

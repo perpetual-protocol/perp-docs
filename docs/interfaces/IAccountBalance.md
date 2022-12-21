@@ -84,10 +84,12 @@ Only used by `ClearingHouse` contract
 ### settleBalanceAndDeregister
 ```solidity
   function settleBalanceAndDeregister(
-    address maker,
+    address trader,
     address baseToken,
+    int256 takerBase,
+    int256 takerQuote,
     int256 realizedPnl,
-    int256 fee
+    int256 makerFee
   ) external
 ```
 Settle account balance and deregister base token
@@ -97,10 +99,12 @@ Only used by `ClearingHouse` contract
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`maker` | address | The address of the maker
+|`trader` | address | The address of the trader
 |`baseToken` | address | The address of the baseToken
+|`takerBase` | int256 | Modified amount of taker base
+|`takerQuote` | int256 | Modified amount of taker quote
 |`realizedPnl` | int256 | Amount of pnl realized
-|`fee` | int256 | Amount of fee collected from pool
+|`makerFee` | int256 | Amount of maker fee collected from pool
 
 ### registerBaseToken
 ```solidity
@@ -359,7 +363,7 @@ Get owedRealizedPnl, unrealizedPnl and pending fee
 ```solidity
   function hasOrder(
     address trader
-  ) external returns (bool hasOrder)
+  ) external returns (bool)
 ```
 Check trader has open order in open/closed market.
 
@@ -372,7 +376,7 @@ Check trader has open order in open/closed market.
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`hasOrder` | bool | True of false
+|`True` | bool | of false
 ### getBase
 ```solidity
   function getBase(
@@ -497,6 +501,28 @@ Get all market position abs value of trader
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`totalAbsPositionValue` | uint256 | Sum up positions value of every market
+### getLiquidatablePositionSize
+```solidity
+  function getLiquidatablePositionSize(
+    address trader,
+    address baseToken,
+    int256 accountValue
+  ) external returns (int256)
+```
+Get liquidatable position size of trader's baseToken market
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
+|`accountValue` | int256 | The account value of trader
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`liquidatablePositionSize` | int256 | The liquidatable position size of trader's baseToken market
 
 ## Events
 ### VaultChanged

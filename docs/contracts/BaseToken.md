@@ -45,6 +45,15 @@
 
 
 
+### cacheTwap
+```solidity
+  function cacheTwap(
+  ) external
+```
+
+
+
+
 ### getPriceFeed
 ```solidity
   function getPriceFeed(

@@ -9,6 +9,20 @@
 
 
 
+### cacheTwap
+```solidity
+  function cacheTwap(
+    uint256 interval
+  ) external
+```
+Update the cached index price of the token.
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`interval` | uint256 | The twap interval in seconds.
+
 ### getPriceFeed
 ```solidity
   function getPriceFeed(
