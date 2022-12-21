@@ -2364,6 +2364,11 @@
   resolved "https://registry.npmjs.org/@openzeppelin/contracts/-/contracts-3.4.0.tgz#9a1669ad5f9fdfb6e273bb5a4fed10cb4cc35eb0"
   integrity sha512-qh+EiHWzfY/9CORr+eRUkeEUP1WiFUcq3974bLHwyYzLBUtK6HPaMkIUHi74S1rDTZ0sNz42DwPc5A4IJvN3rg==
 
+"@openzeppelin/contracts@3.4.1-solc-0.7-2":
+  version "3.4.1-solc-0.7-2"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-3.4.1-solc-0.7-2.tgz#371c67ebffe50f551c3146a9eec5fe6ffe862e92"
+  integrity sha512-tAG9LWg8+M2CMu7hIsqHPaTyG4uDzjr6mhvH96LvOpLZZj6tgzTluBt+LsCf1/QaYrlis6pITvpIaIhE+iZB+Q==
+
 "@openzeppelin/contracts@3.4.2-solc-0.7":
   version "3.4.2-solc-0.7"
   resolved "https://registry.npmjs.org/@openzeppelin/contracts/-/contracts-3.4.2-solc-0.7.tgz#38f4dbab672631034076ccdf2f3201fab1726635"
@@ -2390,15 +2395,37 @@
     proper-lockfile "^4.1.1"
     solidity-ast "^0.4.15"
 
-"@perp/curie-contract@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/@perp/curie-contract/-/curie-contract-1.2.0.tgz#9cb3526e6a60d9e37420eaa0a2e48084a8d0b6c9"
-  integrity sha512-KJ9WY7LEOUU+SOqF9neCvglvc5DMG/ZJ8MgPlLotzTgpBH7gxsTx1rYFXLc1X/TkoXX9amjL1evja8uwYEuTLA==
+"@perp/curie-contract@2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@perp/curie-contract/-/curie-contract-2.4.0.tgz#a3e1cb870d7e9e9e6daa715a4f5ecff9dfec89dc"
+  integrity sha512-rqisPvUp5oG0n7023yJtOFxk/qIvq5v1j+5/rw5YbNHDHQUpY/X3L8m5ywnvnsn4CU49TPFbSl9lKxUV2h4/pg==
+  dependencies:
+    "@chainlink/contracts" "0.1.7"
+    "@openzeppelin/contracts" "3.4.1-solc-0.7-2"
+    "@openzeppelin/contracts-upgradeable" "3.4.2"
+    "@perp/perp-oracle-contract" "0.4.3"
+    "@perp/voting-escrow" "1.2.0"
+    "@uniswap/v3-core" "https://github.com/Uniswap/uniswap-v3-core/tarball/v1.0.0"
+    "@uniswap/v3-periphery" "1.0.1"
 
-"@perp/perp-oracle-contract@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.npmjs.org/@perp/perp-oracle-contract/-/perp-oracle-contract-0.3.0.tgz#c9db2ce0119d6aa7ddbc0b00cc6eadfcfd046b7c"
-  integrity sha512-n3ZxVwkMksjiocfiBNkhNPUWOB0pyZvjdR9IgRZjJ3K1v71E1JEOfwH6HThinaOPk/SEL/4lWvJ2/wKQWTZgRA==
+"@perp/perp-oracle-contract@0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@perp/perp-oracle-contract/-/perp-oracle-contract-0.4.3.tgz#55cc52fef187d3b341c3e4ead7040916be5ad433"
+  integrity sha512-ijOfXkjHRvMVXVj9wLPHpDMr+zYkm2LPgy5pmQ+sG2qIWI3/4jH2Fp8CJR8ZaOTXSLSxe/Yyf1fXSGVIYgcigA==
+
+"@perp/perp-oracle-contract@0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@perp/perp-oracle-contract/-/perp-oracle-contract-0.5.0.tgz#2814fcc8a4bc2a0707d1f55628a64b3637d1b492"
+  integrity sha512-DwbtBmk0/jNOoE3jQLtJGYIbMq80RtYE7J7JlYYb6msK+Ma7Hj8DGf2Odhw1OGbXms/00ZOKW2w5mW8lDrc7nA==
+
+"@perp/voting-escrow@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@perp/voting-escrow/-/voting-escrow-1.2.0.tgz#c45f0702dc68826902a97f66bc1113d2fac60680"
+  integrity sha512-ZoUbpQHLMYqYQfb/YZvQzdeqf/B1Jq59CaFrGcC2Wkz7MDRaWhN1Ldx0XVZyMyStGvemp+A7eoMh7HJLFONC5Q==
+  dependencies:
+    "@openzeppelin/contracts" "3.4.0"
+    "@openzeppelin/contracts-upgradeable" "3.4.2"
+    "@uniswap/v3-core" "https://github.com/Uniswap/uniswap-v3-core/tarball/v1.0.0"
 
 "@polka/url@^1.0.0-next.20":
   version "1.0.0-next.21"
@@ -3126,15 +3153,25 @@
   resolved "https://registry.npmjs.org/@uniswap/v2-core/-/v2-core-1.0.1.tgz#af8f508bf183204779938969e2e54043e147d425"
   integrity sha512-MtybtkUPSyysqLY2U210NBDeCHX+ltHt3oADGdjqoThZaFRDKwM6k1Nb3F0A3hk5hwuQvytFWhrWHOEq6nVJ8Q==
 
-"@uniswap/v3-core@1.0.0":
+"@uniswap/v3-core@1.0.0", "@uniswap/v3-core@https://github.com/Uniswap/uniswap-v3-core/tarball/v1.0.0":
   version "1.0.0"
-  resolved "https://registry.npmjs.org/@uniswap/v3-core/-/v3-core-1.0.0.tgz#6c24adacc4c25dceee0ba3ca142b35adbd7e359d"
-  integrity sha512-kSC4djMGKMHj7sLMYVnn61k9nu+lHjMIxgg9CDQT+s2QYLoA56GbSK9Oxr+qJXzzygbkrmuY6cwgP6cW2JXPFA==
+  resolved "https://github.com/Uniswap/uniswap-v3-core/tarball/v1.0.0#b3712e2b235ad2eeb7a0dfcac216a659cc450e28"
 
 "@uniswap/v3-core@^1.0.0":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@uniswap/v3-core/-/v3-core-1.0.1.tgz#b6d2bdc6ba3c3fbd610bdc502395d86cd35264a0"
   integrity sha512-7pVk4hEm00j9tc71Y9+ssYpO6ytkeI0y7WE9P6UcmNzhxPePwyAxImuhVsTqWK9YFvzgtvzJHi64pBl4jUzKMQ==
+
+"@uniswap/v3-periphery@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@uniswap/v3-periphery/-/v3-periphery-1.0.1.tgz#3d111ba4d33a6ac07d729c72a4a43298f92056ec"
+  integrity sha512-1Q4DVWNWfRumbNrBJgebLOUULGng5g3uky5suu4Cc7GtA1+JmEnw3J2VOrJSv2zn1LOPjURhZgU5T7NiIl2yeA==
+  dependencies:
+    "@openzeppelin/contracts" "3.4.1-solc-0.7-2"
+    "@uniswap/lib" "^4.0.1-alpha"
+    "@uniswap/v2-core" "1.0.1"
+    "@uniswap/v3-core" "1.0.0"
+    base64-sol "1.0.1"
 
 "@uniswap/v3-periphery@^1.3.0":
   version "1.4.1"
