@@ -1,5 +1,6 @@
+![@perp/curie-contract](https://img.shields.io/badge/%40perp%2Fcurie--contract-2.4.0-brightgreen)
+![@perp/perp-oracle-contract](https://img.shields.io/badge/%40perp%2Fperp--oracle--contract-0.5.0-brightgreen)
 # Website
-
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
 # Contributing to Perp Docs

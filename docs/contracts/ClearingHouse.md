@@ -8,19 +8,6 @@
     bool isClose
     uint256 amount
     uint160 sqrtPriceLimitX96
-    bool isLiquidation
-  )
-```
-
-
-
-### InternalClosePositionParams
-```solidity
-  struct InternalClosePositionParams(
-    address trader
-    address baseToken
-    uint160 sqrtPriceLimitX96
-    bool isLiquidation
   )
 ```
 
@@ -50,13 +37,13 @@
 this function is public for testing
 
 
-### setTrustedForwarder
+### setDelegateApproval
 ```solidity
-  function setTrustedForwarder(
+  function setDelegateApproval(
   ) external
 ```
 
-
+remove to reduce bytecode size, might add back when we need it
 
 
 ### addLiquidity
@@ -146,6 +133,27 @@ Trader can call `openPosition` to long/short on baseToken market
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`base` | uint256 | The amount of baseToken the taker got or spent
 |`quote` | uint256 | The amount of quoteToken the taker got or spent
+### openPositionFor
+```solidity
+  function openPositionFor(
+    address trader,
+    struct IClearingHouse.OpenPositionParams params
+  ) external returns (uint256 base, uint256 quote, uint256 fee)
+```
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of trader
+|`params` | struct IClearingHouse.OpenPositionParams | OpenPositionParams struct is the same as `openPosition()`
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`base` | uint256 | The amount of baseToken the taker got or spent
+|`quote` | uint256 | The amount of quoteToken the taker got or spent
+|`fee` | uint256 | The trading fee
 ### closePosition
 ```solidity
   function closePosition(
@@ -170,51 +178,49 @@ Close trader's position
   function liquidate(
     address trader,
     address baseToken,
-    uint256 oppositeAmountBound
-  ) external returns (uint256 base, uint256 quote, bool isPartialClose)
-```
-If trader is underwater, any one can call `liquidate` to liquidate this trader
-
-If trader has open orders, need to call `cancelAllExcessOrders` first
-
-#### Parameters:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`trader` | address | The address of trader
-|`baseToken` | address | The address of baseToken
-|`oppositeAmountBound` | uint256 | please check OpenPositionParams
-
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`base` | uint256 | The amount of baseToken the taker got or spent
-|`quote` | uint256 | The amount of quoteToken the taker got or spent
-|`isPartialClose` | bool | when it's over price limit return true and only liquidate 25% of the position
-### liquidate
-```solidity
-  function liquidate(
-    address trader,
-    address baseToken,
-     oppositeAmountBound
+    int256 positionSize
   ) external
 ```
 If trader is underwater, any one can call `liquidate` to liquidate this trader
 
 If trader has open orders, need to call `cancelAllExcessOrders` first
+If positionSize is greater than maxLiquidatePositionSize, liquidate maxLiquidatePositionSize by default
+If margin ratio >= 0.5 * mmRatio,
+        maxLiquidateRatio = MIN((1, 0.5 * totalAbsPositionValue / absPositionValue)
+If margin ratio < 0.5 * mmRatio, maxLiquidateRatio = 1
+maxLiquidatePositionSize = positionSize * maxLiquidateRatio
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`trader` | address | The address of trader
 |`baseToken` | address | The address of baseToken
-|`oppositeAmountBound` |  | please check OpenPositionParams
+|`positionSize` | int256 | the position size to be liquidated by liquidator
 
-#### Return Values:
+### liquidate
+```solidity
+  function liquidate(
+    address trader,
+    address baseToken,
+     positionSize
+  ) external
+```
+If trader is underwater, any one can call `liquidate` to liquidate this trader
+
+If trader has open orders, need to call `cancelAllExcessOrders` first
+If positionSize is greater than maxLiquidatePositionSize, liquidate maxLiquidatePositionSize by default
+If margin ratio >= 0.5 * mmRatio,
+        maxLiquidateRatio = MIN((1, 0.5 * totalAbsPositionValue / absPositionValue)
+If margin ratio < 0.5 * mmRatio, maxLiquidateRatio = 1
+maxLiquidatePositionSize = positionSize * maxLiquidateRatio
+
+#### Parameters:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`base` |  | The amount of baseToken the taker got or spent
-|`quote` |  | The amount of quoteToken the taker got or spent
-|`isPartialClose` |  | when it's over price limit return true and only liquidate 25% of the position
+|`trader` | address | The address of trader
+|`baseToken` | address | The address of baseToken
+|`positionSize` |  | the position size to be liquidated by liquidator
+
 ### cancelExcessOrders
 ```solidity
   function cancelExcessOrders(
@@ -258,7 +264,7 @@ This function won't fail if the maker has no order but fails when maker is not u
     address baseToken
   ) external returns (uint256 base, uint256 quote)
 ```
-Close all positions of a trader in the closed market
+Close all positions and remove all liquidities of a trader in the closed market
 
 
 #### Parameters:
@@ -414,6 +420,19 @@ Get `InsuranceFund` address
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`insuranceFund` | address | `InsuranceFund` address
+### getDelegateApproval
+```solidity
+  function getDelegateApproval(
+  ) external returns (address)
+```
+Get `DelegateApproval` address
+
+
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`delegateApproval` | address | `DelegateApproval` address
 ### getAccountValue
 ```solidity
   function getAccountValue(

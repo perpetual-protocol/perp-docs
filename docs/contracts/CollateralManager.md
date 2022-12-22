@@ -108,6 +108,15 @@
 
 
 
+### setWhitelistedDebtThreshold
+```solidity
+  function setWhitelistedDebtThreshold(
+  ) external
+```
+
+
+
+
 ### setCollateralValueDust
 ```solidity
   function setCollateralValueDust(
@@ -263,16 +272,36 @@ Get the insurance fund fee ratio when liquidating a trader's collateral
   function getDebtThreshold(
   ) external returns (uint256)
 ```
-Get the maximum debt (denominated in settlement token) allowed
+Get the default maximum debt (denominated in settlement token) allowed
 		before an account’s collateral is liquidatable.
 
 6 decimals
 
 
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`Debt` | uint256 | threshold
+
+### getDebtThresholdByTrader
+```solidity
+  function getDebtThresholdByTrader(
+  ) external returns (uint256)
+```
+Get the maximum whitelisted debt (denominated in settlement token) allowed
+		before an account’s collateral is liquidatable.
+
+6 decimals
+
+
+
+### getTotalWhitelistedDebtThreshold
+```solidity
+  function getTotalWhitelistedDebtThreshold(
+  ) external returns (uint256)
+```
+Get the total whitelisted debt (denominated in settlement token) allowed
+
+6 decimals
+
+
+
 ### getCollateralValueDust
 ```solidity
   function getCollateralValueDust(
