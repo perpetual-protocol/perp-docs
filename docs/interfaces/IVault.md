@@ -162,6 +162,7 @@ Settle trader's bad debt
 ### getBalance
 ```solidity
   function getBalance(
+    address trader
   ) external returns (int256 balance)
 ```
 Get the specified trader's settlement token balance, without pending fee, funding payment
@@ -173,6 +174,10 @@ The function is equivalent to `getBalanceByToken(trader, settlementToken)`
      because the latter includes pending fee, funding payment etc.
      and therefore more accurately reflects a trader's settlement (ex. USDC) balance
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
@@ -201,11 +206,16 @@ Get the balance of Vault of the specified collateral token and trader
 ### getCollateralTokens
 ```solidity
   function getCollateralTokens(
+    address trader
   ) external returns (address[] collateralTokens)
 ```
-Get they array of collateral token addresses that a trader has
+Get the array of collateral token addresses that a trader has in their account
 
 
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
 
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
