@@ -34,20 +34,14 @@ We use [The Graph](https://thegraph.com/) as the default on-chain data indexing 
 
 ### Exploring Data
 
-- Use either of the provided servers:
-    
+- Use the provided server:
+
     ```json
     "graphServerConfigs": [
     	{
     		"url": "https://api.thegraph.com/subgraphs/name/perpetual-protocol/perpetual-v2-optimism",
     		"wsUrl": "wss://api.thegraph.com/subgraphs/name/perpetual-protocol/perpetual-v2-optimism",
     		"healthUrl": "https://api.thegraph.com/index-node/graphql",
-    		"name": "perpetual-protocol/perpetual-v2-optimism"
-    	},
-    	{
-    		"url": "https://subgraph-api-singapore.perp.fi/subgraphs/name/perpetual-protocol/perpetual-v2-optimism",
-    		"wsUrl": "wss://subgraph-ws-singapore.perp.fi/subgraphs/name/perpetual-protocol/perpetual-v2-optimism",
-    		"healthUrl": "https://subgraph-singapore.perp.fi:8030/graphql",
     		"name": "perpetual-protocol/perpetual-v2-optimism"
     	}
     ]
