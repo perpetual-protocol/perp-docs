@@ -30,6 +30,7 @@ Update the cached index price of the token.
 ```
 Get the price feed address
 
+priceFeed is now priceFeedDispatcher, which dispatches either Chainlink or UniswapV3 price
 
 
 #### Return Values:

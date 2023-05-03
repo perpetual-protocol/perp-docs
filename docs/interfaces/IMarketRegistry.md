@@ -5,6 +5,7 @@
     uint24 exchangeFeeRatio
     uint24 uniswapFeeRatio
     uint24 insuranceFundFeeRatio
+    uint24 maxPriceSpreadRatio
   )
 ```
 
@@ -12,72 +13,6 @@
 
 
 ## Functions
-### addPool
-```solidity
-  function addPool(
-    address baseToken,
-    uint24 feeRatio
-  ) external returns (address pool)
-```
-
-Add a new pool to the registry.
-
-#### Parameters:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`baseToken` | address | The token that the pool is for.
-|`feeRatio` | uint24 | The fee ratio for the pool.
-
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`pool` | address | The address of the pool.
-### setFeeRatio
-```solidity
-  function setFeeRatio(
-    address baseToken,
-    uint24 feeRatio
-  ) external
-```
-
-Set the fee ratio for a pool
-
-#### Parameters:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`baseToken` | address | The token address of the pool.
-|`feeRatio` | uint24 | The fee ratio for the pool.
-
-### setInsuranceFundFeeRatio
-```solidity
-  function setInsuranceFundFeeRatio(
-    address baseToken,
-    uint24 insuranceFundFeeRatioArg
-  ) external
-```
-
-Set insurance fund fee ratio for a pool
-
-#### Parameters:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`baseToken` | address | The token address of the pool.
-|`insuranceFundFeeRatioArg` | uint24 | The fee ratio for the pool.
-
-### setMaxOrdersPerMarket
-```solidity
-  function setMaxOrdersPerMarket(
-    uint8 maxOrdersPerMarketArg
-  ) external
-```
-
-Set max allowed orders per market
-
-#### Parameters:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`maxOrdersPerMarketArg` | uint8 | The max allowed orders per market
-
 ### getPool
 ```solidity
   function getPool(
@@ -204,6 +139,18 @@ Check if a pool exist by given base token address
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`hasPool` | bool | True if the pool exist, false otherwise
+### getMarketMaxPriceSpreadRatio
+```solidity
+  function getMarketMaxPriceSpreadRatio(
+  ) external returns (uint24 marketMaxPriceSpreadRatio)
+```
+
+
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`marketMaxPriceSpreadRatio` | uint24 | Max price spread ratio of the market
 
 ## Events
 ### PoolAdded
@@ -266,3 +213,18 @@ Emitted when the max orders per market is updated.
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`maxOrdersPerMarket`| uint8 | Max orders per market
+### MarketMaxPriceSpreadRatioChanged
+```solidity
+  event MarketMaxPriceSpreadRatioChanged(
+    address baseToken,
+    uint24 spreadRatio
+  )
+```
+Emitted when the max market price spread ratio is updated.
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`baseToken`| address | The address of the base token
+|`spreadRatio`| uint24 | Max market price spread ratio

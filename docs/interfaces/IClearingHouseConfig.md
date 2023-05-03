@@ -71,7 +71,7 @@
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`twapInterval` | uint32 | TwapInterval for funding and prices (mark & index) calculations
+|`twapInterval` | uint32 | TwapInterval for funding and prices (market & index) calculations
 ### getSettlementTokenBalanceCap
 ```solidity
   function getSettlementTokenBalanceCap(
@@ -96,10 +96,10 @@
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`maxFundingRate` | uint24 | Max value of funding rate
-### isBackstopLiquidityProvider
+### getMarkPriceConfig
 ```solidity
-  function isBackstopLiquidityProvider(
-  ) external returns (bool isBackstopLiquidityProvider)
+  function getMarkPriceConfig(
+  ) external returns (uint32 marketTwapInterval, uint32 premiumInterval)
 ```
 
 
@@ -107,5 +107,6 @@
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`isBackstopLiquidityProvider` | bool | is backstop liquidity provider
+|`marketTwapInterval` | uint32 | MarketTwapInterval is the interval of market twap used for mark price calculations
+|`premiumInterval` | uint32 | PremiumInterval is the interval of premium used for mark price calculations
 

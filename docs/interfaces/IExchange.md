@@ -169,6 +169,7 @@ negative value means the trader receives funding.
     uint32 twapInterval
   ) external returns (uint160 sqrtMarkTwapX96)
 ```
+(Deprecated function, will be removed in the next release)
 Get the square root of the market twap price with the given time interval
 
 The return value is a X96 number
@@ -183,6 +184,27 @@ The return value is a X96 number
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`sqrtMarkTwapX96` | uint160 | The square root of the market twap price
+### getSqrtMarketTwapX96
+```solidity
+  function getSqrtMarketTwapX96(
+    address baseToken,
+    uint32 twapInterval
+  ) external returns (uint160 sqrtMarketTwapX96)
+```
+Get the square root of the market twap price with the given time interval
+
+The return value is a X96 number
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`baseToken` | address | Address of the base token
+|`twapInterval` | uint32 | The time interval in seconds
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`sqrtMarketTwapX96` | uint160 | The square root of the market twap price
 ### getPnlToBeRealized
 ```solidity
   function getPnlToBeRealized(
@@ -247,7 +269,7 @@ Get `ClearingHouseConfig` contract address
 ```solidity
   event FundingUpdated(
     address baseToken,
-    uint256 markTwap,
+    uint256 marketTwap,
     uint256 indexTwap
   )
 ```
@@ -258,7 +280,7 @@ Emitted when the global funding growth is updated
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`baseToken`| address | Address of the base token
-|`markTwap`| uint256 | The market twap price when the funding growth is updated
+|`marketTwap`| uint256 | The market twap price when the funding growth is updated
 |`indexTwap`| uint256 | The index twap price when the funding growth is updated
 ### MaxTickCrossedWithinBlockChanged
 ```solidity

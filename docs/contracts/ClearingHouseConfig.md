@@ -63,9 +63,18 @@
 
 
 
-### setBackstopLiquidityProvider
+### setMarkPriceMarketTwapInterval
 ```solidity
-  function setBackstopLiquidityProvider(
+  function setMarkPriceMarketTwapInterval(
+  ) external
+```
+
+
+
+
+### setMarkPricePremiumInterval
+```solidity
+  function setMarkPricePremiumInterval(
   ) external
 ```
 
@@ -143,7 +152,7 @@
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`twapInterval` | uint32 | TwapInterval for funding and prices (mark & index) calculations
+|`twapInterval` | uint32 | TwapInterval for funding and prices (market & index) calculations
 ### getSettlementTokenBalanceCap
 ```solidity
   function getSettlementTokenBalanceCap(
@@ -168,10 +177,10 @@
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`maxFundingRate` | uint24 | Max value of funding rate
-### isBackstopLiquidityProvider
+### getMarkPriceConfig
 ```solidity
-  function isBackstopLiquidityProvider(
-  ) external returns (bool)
+  function getMarkPriceConfig(
+  ) external returns (uint32, uint32)
 ```
 
 
@@ -179,62 +188,6 @@
 #### Return Values:
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`isBackstopLiquidityProvider` | bool | is backstop liquidity provider
-
-## Events
-### TwapIntervalChanged
-```solidity
-  event TwapIntervalChanged(
-  )
-```
-
-
-
-### LiquidationPenaltyRatioChanged
-```solidity
-  event LiquidationPenaltyRatioChanged(
-  )
-```
-
-
-
-### PartialCloseRatioChanged
-```solidity
-  event PartialCloseRatioChanged(
-  )
-```
-
-
-
-### MaxMarketsPerAccountChanged
-```solidity
-  event MaxMarketsPerAccountChanged(
-  )
-```
-
-
-
-### SettlementTokenBalanceCapChanged
-```solidity
-  event SettlementTokenBalanceCapChanged(
-  )
-```
-
-
-
-### MaxFundingRateChanged
-```solidity
-  event MaxFundingRateChanged(
-  )
-```
-
-
-
-### BackstopLiquidityProviderChanged
-```solidity
-  event BackstopLiquidityProviderChanged(
-  )
-```
-
-
+|`marketTwapInterval` | uint32 | MarketTwapInterval is the interval of market twap used for mark price calculations
+|`premiumInterval` | uint32 | PremiumInterval is the interval of premium used for mark price calculations
 
