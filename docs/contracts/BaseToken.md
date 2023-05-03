@@ -42,7 +42,7 @@
   ) external
 ```
 
-
+priceFeed is now priceFeedDispatcher, which dispatches either Chainlink or UniswapV3 price
 
 
 ### cacheTwap
@@ -61,6 +61,7 @@
 ```
 Get the price feed address
 
+priceFeed is now priceFeedDispatcher, which dispatches either Chainlink or UniswapV3 price
 
 
 #### Return Values:

@@ -376,6 +376,30 @@ Get liquidatable position size of trader's baseToken market
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`liquidatablePositionSize` | int256 | The liquidatable position size of trader's baseToken market
+### getMarkPrice
+```solidity
+  function getMarkPrice(
+    address baseToken
+  ) external returns (uint256)
+```
+Get mark price of baseToken market
+
+Mark price is the median of three prices as below.
+       1. current market price
+       2. market twap with 30 mins
+       3. index price + premium with 15 mins
+If the parameters to calculate mark price are not set, returns index twap instead for backward compatible
+If the market is paused, returns index twap instead, that will be the index twap while pausing market
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`baseToken` | address | The address of baseToken
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`price` | uint256 | The mark price of baseToken market
 ### getBase
 ```solidity
   function getBase(
@@ -470,7 +494,7 @@ Get total position size of trader's baseToken market
 Get total position value of trader's baseToken market
 
 A negative returned value is only be used when calculating pnl,
-we use `15 mins` twap to calc position value
+we use mark price to calc position value
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |

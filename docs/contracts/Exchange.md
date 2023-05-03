@@ -250,6 +250,49 @@ Check if current price spread between market price and index twap is over maximu
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`true` | bool | if over the maximum price spread
+### getSqrtMarkTwapX96
+```solidity
+  function getSqrtMarkTwapX96(
+    address baseToken,
+    uint32 twapInterval
+  ) external returns (uint160)
+```
+(Deprecated function, will be removed in the next release)
+Get the square root of the market twap price with the given time interval
+
+The return value is a X96 number
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`baseToken` | address | Address of the base token
+|`twapInterval` | uint32 | The time interval in seconds
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`sqrtMarkTwapX96` | uint160 | The square root of the market twap price
+### getSqrtMarketTwapX96
+```solidity
+  function getSqrtMarketTwapX96(
+    address baseToken,
+    uint32 twapInterval
+  ) external returns (uint160)
+```
+Get the square root of the market twap price with the given time interval
+
+The return value is a X96 number
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`baseToken` | address | Address of the base token
+|`twapInterval` | uint32 | The time interval in seconds
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`sqrtMarketTwapX96` | uint160 | The square root of the market twap price
 ### getPendingFundingPayment
 ```solidity
   function getPendingFundingPayment(
@@ -266,25 +309,4 @@ this is the view version of _updateFundingGrowth()
 |`pendingFundingPayment` | int256 | The pending funding payment of a trader in one market,
 including liquidity & balance coefficients. Positive value means the trader pays funding,
 negative value means the trader receives funding.
-### getSqrtMarkTwapX96
-```solidity
-  function getSqrtMarkTwapX96(
-    address baseToken,
-    uint32 twapInterval
-  ) public returns (uint160)
-```
-Get the square root of the market twap price with the given time interval
-
-The return value is a X96 number
-
-#### Parameters:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`baseToken` | address | Address of the base token
-|`twapInterval` | uint32 | The time interval in seconds
-
-#### Return Values:
-| Name                           | Type          | Description                                                                  |
-| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
-|`sqrtMarkTwapX96` | uint160 | The square root of the market twap price
 
