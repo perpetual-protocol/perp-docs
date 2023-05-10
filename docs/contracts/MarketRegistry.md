@@ -54,6 +54,15 @@
 
 
 
+### setFeeDiscountRatio
+```solidity
+  function setFeeDiscountRatio(
+  ) external
+```
+
+
+
+
 ### getQuoteToken
 ```solidity
   function getQuoteToken(
@@ -179,6 +188,15 @@ Get the market info by given base token address
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`info` | struct IMarketRegistry.MarketInfo | The market info encoded as `MarketInfo`
+### getMarketInfoByTrader
+```solidity
+  function getMarketInfoByTrader(
+  ) external returns (struct IMarketRegistry.MarketInfo)
+```
+
+
+
+
 ### hasPool
 ```solidity
   function hasPool(

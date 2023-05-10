@@ -6,6 +6,7 @@
     bool isExactInput
     uint256 amount
     uint160 sqrtPriceLimitX96
+    address trader
   )
 ```
 
@@ -257,7 +258,7 @@ Check if current price spread between market price and index twap is over maximu
     uint32 twapInterval
   ) external returns (uint160)
 ```
-(Deprecated function, will be removed in the next release)
+**Deprecated function, will be removed in the next release, use `getSqrtMarketTwapX96()` instead**
 Get the square root of the market twap price with the given time interval
 
 The return value is a X96 number

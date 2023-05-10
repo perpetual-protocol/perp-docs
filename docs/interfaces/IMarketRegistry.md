@@ -87,6 +87,26 @@ Get the market info by given base token address
 | Name                           | Type          | Description                                                                  |
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`info` | struct IMarketRegistry.MarketInfo | The market info encoded as `MarketInfo`
+### getMarketInfoByTrader
+```solidity
+  function getMarketInfoByTrader(
+    address trader,
+    address baseToken
+  ) external returns (struct IMarketRegistry.MarketInfo info)
+```
+Get the market info by given trader address and base token address
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader` | address | The address of the trader
+|`baseToken` | address | The address of the base token
+
+#### Return Values:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`info` | struct IMarketRegistry.MarketInfo | The market info encoded as `MarketInfo`
 ### getQuoteToken
 ```solidity
   function getQuoteToken(
@@ -228,3 +248,18 @@ Emitted when the max market price spread ratio is updated.
 | :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
 |`baseToken`| address | The address of the base token
 |`spreadRatio`| uint24 | Max market price spread ratio
+### FeeDiscountRatioChanged
+```solidity
+  event FeeDiscountRatioChanged(
+    address trader,
+    uint24 discountRatio
+  )
+```
+Emitted when the trader's fee discount ratio gets updated.
+
+
+#### Parameters:
+| Name                           | Type          | Description                                                                  |
+| :----------------------------- | :------------ | :--------------------------------------------------------------------------- |
+|`trader`| address | The address of the trader
+|`discountRatio`| uint24 | Fee discount ratio (percent-off)

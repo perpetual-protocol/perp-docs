@@ -113,7 +113,7 @@ Remove liquidity logic, only used by `ClearingHouse` contract
 ```
 
 This is the non-view version of `getLiquidityCoefficientInFundingPayment()`,
-only can be called by `ClearingHouse` contract
+only can be called by `Exchange` contract
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
@@ -162,7 +162,7 @@ The caller of this method must be checked to be a UniswapV3Pool deployed by the 
   ) external returns (struct IOrderBook.ReplaySwapResponse)
 ```
 Replay the swap and get the swap result (price impact and swap fee),
-only can be called by `ClearingHouse` contract;
+only can be called by `Exchange` contract;
 
 `ReplaySwapResponse.insuranceFundFee = fee * insuranceFundFeeRatio`
 
