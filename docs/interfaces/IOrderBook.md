@@ -62,6 +62,8 @@
     uint24 exchangeFeeRatio
     uint24 uniswapFeeRatio
     struct Funding.Growth globalFundingGrowth
+    address pool
+    uint24 insuranceFundFeeRatio
   )
 ```
 
@@ -137,7 +139,7 @@ Remove liquidity logic, only used by `ClearingHouse` contract
 ```
 
 This is the non-view version of `getLiquidityCoefficientInFundingPayment()`,
-only can be called by `ClearingHouse` contract
+only can be called by `Exchange` contract
 
 #### Parameters:
 | Name                           | Type          | Description                                                                  |
@@ -157,7 +159,7 @@ only can be called by `ClearingHouse` contract
   ) external returns (struct IOrderBook.ReplaySwapResponse response)
 ```
 Replay the swap and get the swap result (price impact and swap fee),
-only can be called by `ClearingHouse` contract;
+only can be called by `Exchange` contract;
 
 `ReplaySwapResponse.insuranceFundFee = fee * insuranceFundFeeRatio`
 

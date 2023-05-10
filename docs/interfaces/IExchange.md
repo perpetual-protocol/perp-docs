@@ -169,7 +169,7 @@ negative value means the trader receives funding.
     uint32 twapInterval
   ) external returns (uint160 sqrtMarkTwapX96)
 ```
-(Deprecated function, will be removed in the next release)
+**Deprecated function, will be removed in the next release, use `getSqrtMarketTwapX96()` instead**
 Get the square root of the market twap price with the given time interval
 
 The return value is a X96 number
