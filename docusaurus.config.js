@@ -50,11 +50,6 @@ module.exports = {
           { to: "docs/contract-overview", label: "Contracts", position: "left" },
           { to: "docs/guides/data-source", label: "Usage Guide", position: "right" },
           {
-            href: "https://perpprotocol.mirror.xyz/",
-            label: "Blog",
-            position: "right",
-          },
-          {
             href: "https://github.com/perpetual-protocol/perp-docs",
             position: "right",
             className: "header-github-link",
@@ -62,61 +57,61 @@ module.exports = {
           },
         ],
       },
-      footer: {
-        // style: "dark",
-        links: [
-          {
-            title: "Product",
-            items: [
-              {
-                label: "Launch App",
-                to: "https://app.perp.com",
-              },
-              {
-                label: "Token",
-                to: "https://token.perp.com",
-              },
-              { label: "Third-party Vaults", to: "https://perp.com/featured-partners" },
-              // NOTE: these 2 links are broken. Wait for update from marketing team
-              // { label: "Leaderboard", to: "https://perpetual.io/leaderboard" },
-              // { label: "Analytics", to: "https://perpetual.io/analytics" },
-            ],
-          },
-          {
-            title: "Protocol",
-            items: [
-              { label: "About", to: "https://perp.com" },
-              { label: "Blog", to: "https://blog.perp.fi/" },
-              { label: "Newsletter", to: "https://www.getrevue.co/profile/perpprotocol/" },
-              { label: "Jobs", to: "https://jobs.perp.fi/" },
-              { label: "Shop", to: "https://shop.perp.fi/" },
-            ],
-          },
-          {
-            title: "Resources",
-            items: [
-              { label: "FAQ", to: "http://support.perp.com/" },
-              { label: "Developers", to: "https://perp.com/developers" },
-              { label: "Learn", to: "https://perp.com/learn" },
-              { label: "Ecosystem", to: "https://perp.com/ecosystem" },
-              { label: "Perpvangelist", to: "https://perp.com/perpvangelist" },
-              { label: "Governance", to: "https://perp.com/governance" },
-              { label: "Brand", to: "https://perp.com/branding" },
-            ],
-          },
-          {
-            title: "Social Media",
-            items: [
-              { label: "Twitter", to: "https://twitter.com/perpprotocol", img: "twitterIcon" },
-              { label: "YouTube", to: "https://www.youtube.com/c/PerpetualProtocol", img: "youtubeIcon" },
-              { label: "Discord", to: "https://discord.com/invite/Dq9mTmCaBb", img: "discordIcon" },
-              { label: "Telegram", to: "https://t.me/perpetualprotocol", img: "telegramIcon" },
-              { label: "Medium", to: "https://perpetualprotocol.medium.com/", img: "mediumIcon" },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} Perpetual Protocol. Built with Docusaurus.`,
-      },
+      // footer: {
+      //   // style: "dark",
+      //   links: [
+      //     {
+      //       title: "Product",
+      //       items: [
+      //         {
+      //           label: "Launch App",
+      //           to: "https://app.perp.com",
+      //         },
+      //         {
+      //           label: "Token",
+      //           to: "https://token.perp.com",
+      //         },
+      //         { label: "Third-party Vaults", to: "https://perp.com/featured-partners" },
+      //         // NOTE: these 2 links are broken. Wait for update from marketing team
+      //         // { label: "Leaderboard", to: "https://perpetual.io/leaderboard" },
+      //         // { label: "Analytics", to: "https://perpetual.io/analytics" },
+      //       ],
+      //     },
+      //     {
+      //       title: "Protocol",
+      //       items: [
+      //         { label: "About", to: "https://perp.com" },
+      //         { label: "Blog", to: "https://blog.perp.fi/" },
+      //         { label: "Newsletter", to: "https://www.getrevue.co/profile/perpprotocol/" },
+      //         { label: "Jobs", to: "https://jobs.perp.fi/" },
+      //         { label: "Shop", to: "https://shop.perp.fi/" },
+      //       ],
+      //     },
+      //     {
+      //       title: "Resources",
+      //       items: [
+      //         { label: "FAQ", to: "http://support.perp.com/" },
+      //         { label: "Developers", to: "https://perp.com/developers" },
+      //         { label: "Learn", to: "https://perp.com/learn" },
+      //         { label: "Ecosystem", to: "https://perp.com/ecosystem" },
+      //         { label: "Perpvangelist", to: "https://perp.com/perpvangelist" },
+      //         { label: "Governance", to: "https://perp.com/governance" },
+      //         { label: "Brand", to: "https://perp.com/branding" },
+      //       ],
+      //     },
+      //     {
+      //       title: "Social Media",
+      //       items: [
+      //         { label: "Twitter", to: "https://twitter.com/perpprotocol", img: "twitterIcon" },
+      //         { label: "YouTube", to: "https://www.youtube.com/c/PerpetualProtocol", img: "youtubeIcon" },
+      //         { label: "Discord", to: "https://discord.com/invite/Dq9mTmCaBb", img: "discordIcon" },
+      //         { label: "Telegram", to: "https://t.me/perpetualprotocol", img: "telegramIcon" },
+      //         { label: "Medium", to: "https://perpetualprotocol.medium.com/", img: "mediumIcon" },
+      //       ],
+      //     },
+      //   ],
+      //   copyright: `Copyright © ${new Date().getFullYear()} Perpetual Protocol. Built with Docusaurus.`,
+      // },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
